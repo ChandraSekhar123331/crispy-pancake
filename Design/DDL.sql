@@ -1,16 +1,16 @@
-DROP TABLE Table_booking;
-DROP TABLE Attended_by;
-DROP TABLE Ingredients;
-DROP TABLE Attendant;
-DROP TABLE Chef;
-DROP TABLE Manager;
-DROP TABLE Ordered_items;
-DROP TABLE Dish;
-DROP TABLE Stock;
-DROP TABLE Customer;
-DROP TABLE tbl;
-DROP TABLE Bill;
-DROP TABLE Employee;
+DROP TABLE IF EXISTS Table_booking;
+DROP TABLE IF EXISTS Attended_by;
+DROP TABLE IF EXISTS Ingredients;
+DROP TABLE IF EXISTS Attendant;
+DROP TABLE IF EXISTS Chef;
+DROP TABLE IF EXISTS Manager;
+DROP TABLE IF EXISTS Ordered_items;
+DROP TABLE IF EXISTS Dish;
+DROP TABLE IF EXISTS Stock;
+DROP TABLE IF EXISTS Customer;
+DROP TABLE IF EXISTS tbl;
+DROP TABLE IF EXISTS Bill;
+DROP TABLE IF EXISTS Employee;
 
 CREATE TABLE Employee (
   emp_id bigserial,
@@ -67,7 +67,7 @@ CREATE TABLE Dish (
   is_veg boolean,
   cuisine varchar,
   item_type varchar,
-  profit int,
+  profit_percentage int,
   PRIMARY KEY (dish_id)
 );
 
