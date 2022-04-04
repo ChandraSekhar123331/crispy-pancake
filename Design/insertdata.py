@@ -123,8 +123,8 @@ if __name__ == "__main__":
     ]
 
     ordered_items_cols = [
-        {"col_name": "bill_id", "method": "auto", "type_func": int},
-        {"col_name": "dish_id", "method": "auto", "type_func": int},
+        {"col_name": "bill_id", "type_func": int},
+        {"col_name": "dish_id", "type_func": int},
         {"col_name": "quantity", "type_func": int},
         {"col_name": "rating", "type_func": int},
     ]
@@ -145,20 +145,20 @@ if __name__ == "__main__":
     ]
 
     ingredients_cols = [
-        {"col_name": "dish_id", "method": "auto", "type_func": int},
-        {"col_name": "stock_id", "method": "auto", "type_func": int},
+        {"col_name": "dish_id", "type_func": int},
+        {"col_name": "stock_id", "type_func": int},
         {"col_name": "quantity", "type_func": int},
     ]
 
     attended_by_cols = [
-        {"col_name": "bill_id", "method": "auto", "type_func": int},
-        {"col_name": "attendant_id", "method": "auto", "type_func": int},
+        {"col_name": "bill_id", "type_func": int},
+        {"col_name": "attendant_id", "type_func": int},
         {"col_name": "rating", "type_func": int},
     ]
 
     table_booking_cols = [
-        {"col_name": "customer_id", "method": "auto", "type_func": int},
-        {"col_name": "table_id", "method": "auto", "type_func": int},
+        {"col_name": "customer_id", "type_func": int},
+        {"col_name": "table_id", "type_func": int},
         {"col_name": "day", "type_func": str},
         {"col_name": "start_time", "type_func": str},
         {"col_name": "end_time", "type_func": str},
@@ -173,7 +173,99 @@ if __name__ == "__main__":
             cursor.execute(sql, values_list)
             header_str, serial_values, values_list, format_spec = parse(row, manager_cols)
             sql = f"""INSERT INTO manager ({header_str}) VALUES ({serial_values} {format_spec})"""
-            cursor.execute(sql, values_list) 
+            cursor.execute(sql, values_list)
+
+    with open("attendant.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO employee ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+            header_str, serial_values, values_list, format_spec = parse(row, manager_cols)
+            sql = f"""INSERT INTO attendant ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+    
+    with open("chef.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO employee ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+            header_str, serial_values, values_list, format_spec = parse(row, manager_cols)
+            sql = f"""INSERT INTO chef ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+    
+    with open("bill.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO bill ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+    
+    with open("tbl.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO tbl ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+
+    with open("customer.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO customer ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+
+    with open("stock.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO stock ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+
+    with open("dish.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO dish ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+
+    with open("ordered_items.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO ordered_items ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+
+    with open("ingredients.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO ingredients ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+
+    with open("attended_by.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO attended_by ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+    
+    with open("table_booking.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            header_str, serial_values, values_list, format_spec = parse(row, employee_cols)
+            sql = f"""INSERT INTO table_booking ({header_str}) VALUES ({serial_values} {format_spec})"""
+            cursor.execute(sql, values_list)
+
+    
+
+    
+    
+
+    
+    
+
     conn.commit()
     t1 = time.time()
     time_insert = t1 - t0

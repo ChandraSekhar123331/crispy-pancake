@@ -1,0 +1,11 @@
+if __name__ == "__main__":
+    attendant_file = open("attendant.csv", 'w')
+    attended_by_file = open("attended_by.csv", 'w')
+    bill_file = open("bill.csv", 'w')
+    chef_file = open("chef.csv", 'w')
+    dish_file = open("dish.csv", 'w')
+    ingredients_file = open("ingredients.csv", 'w')
+    manager_file = open("manager.csv", 'w')
+    stock_file = open("stock.csv", 'w')
+    table_booking_file = open("table_booking.csv", 'w')
+    tbl_file = open("tbl.csv", 'w')
