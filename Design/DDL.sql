@@ -134,3 +134,15 @@ CREATE TABLE Table_booking (
   FOREIGN KEY (table_id) REFERENCES tbl
 );
 
+CREATE MATERIALIZED VIEW if not exists MENU as 
+select dish.dish_id,
+dish.dish_name,
+sum(ing.quantity * stock.price_per_unit) * (1 + dish.profit_percentage/100.0) as dish_price
+from ingredients as ing, stock, dish
+where ing.stock_id = stock.stock_id
+AND dish.dish_id = ing.dish_id
+group by(dish.dish_id)
+ORDER BY dish_price DESC
+with data
+
+
