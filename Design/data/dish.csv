@@ -1,0 +1,32 @@
+dish_name,is_veg,cuisine,item_type,profit_percentage
+veg burger,True,Zanzibari,Snack,28
+pizza,True,Lebanese,Snack,39
+Pasta,True,North African,Snack,60
+Pav Bhaji,True,South Sudanese ,Snack,53
+Butter Chicken,False,Centrafrican,Curry,53
+Mutton Pulusu,False,Maasai,Curry,19
+Dal,True,Eritrean,Curry,20
+Kadai veg,True,Centrafrican,Curry,53
+Mixed veg,True,East African,Curry,38
+Paneer Butter Masala,True,Centrafrican,Curry,57
+Cashew Butter Masala,True,Eritrean,Curry,33
+Chicken Fry Masala,True,Equatorial Guinea,Curry,46
+Chicken Fry,True,Santomean,Curry,28
+Butter Naan,True,Angolan,Roti,35
+Roti,True,Burundian ,Roti,39
+Chicken Biryani,False,Gabonese,Biryani,23
+Paneer Biryani,True,French,Biryani,34
+Dhum Biryani,False,French,Biryani,32
+Mutton Biryani,False,Chadian,Biryani,27
+Prawns Biryani,False,Centrafrican,Biryani,52
+Masala Dosa,True,Kenyan,Dosa,45
+Paneer Dosa,True,South Sudanese ,Dosa,36
+Egg Dosa,False,Gabonese,Dosa,43
+Upma Dosa,True,Angolan,Dosa,37
+Pesara Dosa,True,Congolese,Dosa,31
+Gulab Jamun,True,Argentinian,Desert,26
+Chocolate Brownie,True,North African,Desert,49
+Oreo,True,French,Milk shake,15
+Kitkat,True,South Sudanese ,Milk shake,20
+Brownie,True,Lebanese,Milk shake,43
+Chocoblast,True,French,Milk shake,29

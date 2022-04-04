@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS Manager;
 DROP TABLE IF EXISTS Ordered_items;
 DROP TABLE IF EXISTS Dish;
 DROP TABLE IF EXISTS Stock;
-DROP TABLE IF EXISTS Customer;
 DROP TABLE IF EXISTS tbl;
 DROP TABLE IF EXISTS Bill;
+DROP TABLE IF EXISTS Customer;
 DROP TABLE IF EXISTS Employee;
 
 CREATE TABLE Employee (
@@ -26,20 +26,6 @@ CREATE TABLE Employee (
   UNIQUE (user_name)
 );
 
-CREATE TABLE Bill (
-  bill_id bigserial,
-  bill_time timestamp,
-  order_type varchar,
-  rating int,
-  PRIMARY KEY (bill_id)
-);
-
-CREATE TABLE tbl (
-  table_id bigserial,
-  position varchar,
-  occupancy int,
-  PRIMARY KEY (table_id)
-);
 
 CREATE TABLE Customer (
   customer_id bigserial,
@@ -50,6 +36,24 @@ CREATE TABLE Customer (
   cust_address varchar,
   cust_password varchar,
   PRIMARY KEY (customer_id)
+);
+
+
+CREATE TABLE Bill (
+  bill_id bigserial,
+  customer_id bigint, 
+  bill_time timestamp,
+  order_type varchar,
+  rating int,
+  PRIMARY KEY (bill_id),
+  FOREIGN KEY (customer_id) REFERENCES Customer
+);
+
+CREATE TABLE tbl (
+  table_id bigserial,
+  position varchar,
+  occupancy int,
+  PRIMARY KEY (table_id)
 );
 
 CREATE TABLE Stock (
@@ -115,19 +119,18 @@ CREATE TABLE Attended_by (
   bill_id bigint,
   attendant_id bigint,
   rating int,
-  PRIMARY KEY (bill_id, attendant_id),
+  PRIMARY KEY (bill_id),
   FOREIGN KEY (bill_id) REFERENCES Bill,
   FOREIGN KEY (attendant_id) REFERENCES Attendant
 );
 
 CREATE TABLE Table_booking (
-  customer_id bigint,
+  bill_id bigint,
   table_id bigint,
-  day date,
   start_time timestamp,
   end_time timestamp,
-  PRIMARY KEY (customer_id, table_id, day, start_time),
-  FOREIGN KEY (customer_id) REFERENCES Customer,
+  PRIMARY KEY (bill_id, table_id),
+  FOREIGN KEY (bill_id) REFERENCES Bill,
   FOREIGN KEY (table_id) REFERENCES tbl
 );
 

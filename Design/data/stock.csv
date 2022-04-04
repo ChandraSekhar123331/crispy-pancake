@@ -1,0 +1,50 @@
+stock_name,quantity_left,min_required,price_per_unit
+milk,24,8,317
+water,55,7,136
+pepper,36,8,72
+salt,11,1,438
+carrot,40,4,96
+beetroot,47,0,139
+banana,34,0,174
+cabbage,16,4,201
+capsicum,40,5,67
+chilli,48,8,284
+sweet corn,19,1,221
+bottle guard,17,5,348
+snake guard,22,4,546
+sugar,40,7,321
+radish,43,7,68
+tomato,39,4,269
+apple,25,7,201
+cheese,31,8,148
+ghee,21,2,356
+peanut oil,24,3,536
+sunflower oil,33,1,539
+soya,38,1,469
+vermicelli,27,6,437
+rice,32,0,416
+wheat flour,52,4,241
+peanut,25,8,68
+bread,30,2,336
+jam,16,1,201
+curd,22,5,384
+mango,30,7,190
+orange,52,4,264
+custard,19,5,336
+cinnamon,42,1,207
+coriander,34,6,481
+coke,22,7,177
+chocolate,42,4,323
+icecream,20,6,374
+sprite,36,7,276
+sauce,39,5,445
+Cashew,24,8,404
+Badam,47,7,234
+chicken,15,2,273
+fish,48,2,412
+prawns,25,3,285
+mutton,19,4,278
+lamb,30,6,163
+crab,20,4,162
+crayfish,50,8,138
+egg,35,2,435
