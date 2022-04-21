@@ -1,59 +1,28 @@
-const dotenv = require('dotenv').config()
-dotenv.config()
+require("dotenv").config();
 
-const express = require('express')
-const cors = require('cors')
-const session = require('express-session')
-
+const express = require("express");
+const cors = require("cors");
 // express app init and config
-const app = express()
+const app = express();
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(
-    cors({
-        origin: 'http://localhost:3001',
-        methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
-        credentials: true,
-    })
-)
+  cors({
+    origin: "*",
+    // origin: `http://localhost:${process.env.frontend_port}`,
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 
-// pg init and config
-const { Client } = require('pg')
-const conObject = {
-    user: process.env.USER,
-    host: process.env.HOST,
-    database: process.env.DATABASE,
-    password: process.env.PASSWORD,
-    port: process.env.PORT,
-}
+const conn_db = require("./services/connect_db");
 
-const client = new Client(conObject)
-client.connect()
-
-// session store and session config
-const store = new (require('connect-pg-simple')(session))({
-    conObject,
-})
-
-app.use(
-    session({
-        store: store,
-        secret: process.env.SESSION_SECRET,
-        saveUninitialized: false,
-        resave: false,
-        cookie: {
-            secure: false,
-            httpOnly: false,
-            sameSite: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        },
-    })
-)
+app.use(conn_db.session_store);
+require("./routes/index")(app);
 
 // now listen on port 3000...
-const port = 3000
+const port = 3000;
 app.listen(port, () => {
-    console.log(`App started on port ${port}`)
-})
+  console.log(`App started on port ${port}`);
+});
