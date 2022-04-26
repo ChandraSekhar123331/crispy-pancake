@@ -18,8 +18,10 @@ app.use(
 
 const conn_db = require("./services/connect_db");
 
-app.use(conn_db.session_store);
-require("./routes/index")(app);
+app.use(conn_db.session_middleware);
+
+const configure_routes = require("./routes/index");
+configure_routes(app);
 
 // now listen on port 3000...
 const port = 3000;

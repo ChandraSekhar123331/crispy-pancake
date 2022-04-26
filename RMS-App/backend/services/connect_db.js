@@ -15,7 +15,7 @@ const store = new (require("connect-pg-simple")(session))({
   pool: pool_obj,
 });
 
-const session_store = session({
+const session_middleware = session({
   store: store,
   secret: process.env.SESSION_SECRET,
   saveUninitialized: false,
@@ -24,9 +24,9 @@ const session_store = session({
     secure: false,
     httpOnly: false,
     sameSite: false,
-    maxAge: 1000 * 60, // in millisec,
+    maxAge: 1000 * 60 * 5, // in millisec,
   },
 });
 
 exports.pool_obj = pool_obj;
-exports.session_store = session_store;
+exports.session_middleware = session_middleware;
