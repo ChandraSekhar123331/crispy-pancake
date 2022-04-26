@@ -1,7 +1,7 @@
-const register_controller = require("../controllers/register");
-const login_controller = require("../controllers/login");
-const logout_controller = require("../controllers/logout");
-const fetch_user_controller = require("../controllers/fetch-user");
+const register_controller = require("../controllers/auth/register");
+const login_controller = require("../controllers/auth/login");
+const logout_controller = require("../controllers/auth/logout");
+const fetch_user_controller = require("../controllers/auth/fetch-user");
 
 const express = require("express");
 let router = express.Router();

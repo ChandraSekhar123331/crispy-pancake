@@ -176,7 +176,7 @@ def create_attendant_data(faker: Faker()):
         "salary",
         "attendant_role",
     ]
-    with open("data/attendant.csv", "w", newline="") as file:
+    with open("data_folder/attendant.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
         for _ in range(num_attendants):
@@ -206,7 +206,7 @@ def create_chef_data(faker: Faker()):
         "salary",
         "specialization",
     ]
-    with open("data/chef.csv", "w", newline="") as file:
+    with open("data_folder/chef.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
         for _ in range(num_chefs):
@@ -236,7 +236,7 @@ def create_manager_data(faker: Faker()):
         "salary",
         "skill",
     ]
-    with open("data/manager.csv", "w", newline="") as file:
+    with open("data_folder/manager.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
         for _ in range(num_managers):
@@ -263,7 +263,7 @@ def create_customer_data(faker: Faker()):
         "cust_address",
         "cust_password",
     ]
-    with open("data/customer.csv", "w", newline="") as file:
+    with open("data_folder/customer.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
         for _ in range(num_customers):
@@ -285,7 +285,7 @@ def create_stock_data():
         "min_required",
         "price_per_unit",
     ]
-    with open("data/stock.csv", "w", newline="") as file:
+    with open("data_folder/stock.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
         for item in stock:
@@ -303,7 +303,7 @@ def create_dish_data():
         "item_type",
         "profit_percentage",
     ]
-    with open("data/dish.csv", "w", newline="") as file:
+    with open("data_folder/dish.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
         for dish in dishes:
@@ -324,7 +324,7 @@ def create_table_data():
         "position",
         "occupancy",
     ]
-    with open("data/tbl.csv", "w", newline="") as file:
+    with open("data_folder/tbl.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
         used_posns = set()
@@ -351,7 +351,7 @@ def create_ingredients_data():
         "stock_id",
         "quantity",
     ]
-    with open("data/ingredients.csv", "w", newline="") as file:
+    with open("data_folder/ingredients.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
         for dish_id, dish in enumerate(dishes):
@@ -396,10 +396,10 @@ def create_bill_data():
         "rating",
     ]
 
-    with open("data/bill.csv", "w", newline="") as bill_file:
-        with open("data/ordered_items.csv", "w", newline="") as ordered_items_file:
-            with open("data/table_booking.csv", "w", newline="") as table_booking_file:
-                with open("data/attended_by.csv", "w", newline="") as attended_by_file:
+    with open("data_folder/bill.csv", "w", newline="") as bill_file:
+        with open("data_folder/ordered_items.csv", "w", newline="") as ordered_items_file:
+            with open("data_folder/table_booking.csv", "w", newline="") as table_booking_file:
+                with open("data_folder/attended_by.csv", "w", newline="") as attended_by_file:
                     bill_writer = csv.writer(bill_file)
                     ord_items_writer = csv.writer(ordered_items_file)
                     tbl_booking_writer = csv.writer(table_booking_file)

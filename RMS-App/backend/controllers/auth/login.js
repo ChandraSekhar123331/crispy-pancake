@@ -7,7 +7,7 @@ const login_user = function (req, res) {
     return res.sendStatus(403);
   }
 
-  require("../services/login")
+  require("../../services/login")
     .login_user(email)
     .then((response) => {
       const user = response;
