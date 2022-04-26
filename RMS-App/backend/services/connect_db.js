@@ -1,5 +1,5 @@
 const session = require("express-session");
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
 const conn_obj = {
   user: process.env.DB_USER,
@@ -9,11 +9,7 @@ const conn_obj = {
   port: process.env.DB_PORT,
 };
 
-const pool_obj = new Client(conn_obj);
-
-// const store = new (require("connect-pg-simple")(session))({
-//   conObject,
-// });
+const pool_obj = new Pool(conn_obj);
 
 const store = new (require("connect-pg-simple")(session))({
   pool: pool_obj,

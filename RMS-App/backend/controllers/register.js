@@ -1,19 +1,17 @@
 const bcrypt = require("bcryptjs");
 
 const register_user = function (req, res) {
-  const { firstname, surname, email, password } = req.body;
-
+  const { firstname, surname, email, password } = req.query;
   if (
     firstname == null ||
     surname == null ||
     email == null ||
     password == null
   ) {
-    console.log(firstname, surname, email, password);
     return res.sendStatus(403);
   }
 
-  const hashedPassword = bcrypt.hashSync(password, 30);
+  const hashedPassword = bcrypt.hashSync(password, 10);
   require("../services/register")
     .register_user(firstname, surname, email, hashedPassword)
     .then((response) => {
@@ -26,6 +24,10 @@ const register_user = function (req, res) {
       };
       res.status(200);
       return res.json({ user: req.session.user });
+    })
+    .catch(() => {
+      res.status(403);
+      return res.json({ error_message: "Unable to insert the user" });
     });
 };
 

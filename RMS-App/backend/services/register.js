@@ -9,8 +9,7 @@ const register_user = function (firstname, surname, email, password) {
       return Promise.resolve(response.rows[0]);
     })
     .catch((error) => {
-      console.log("Unable to insert the user");
-      console.log(error);
+      console.log("Unable to register the user");
       return Promise.reject(error);
     });
 };
