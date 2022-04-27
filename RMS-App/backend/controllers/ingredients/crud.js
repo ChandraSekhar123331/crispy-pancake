@@ -1,7 +1,7 @@
 const insert = function insert(req, res) {};
 const dlete = function dlete(req, res) {};
 const update = function update(req, res) {};
-const getAllInfo = function getInfo(req, res) {};
+const getAllInfo = function getAllInfo(req, res) {};
 const getOneInfo = function getOneInfo(req, res) {};
 
 exports.insert = insert;

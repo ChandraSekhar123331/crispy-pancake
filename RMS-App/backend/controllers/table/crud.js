@@ -68,7 +68,7 @@ const getAllInfo = function getAllInfo(req, res) {
     return res.status(409).json({ message: 'skip, lim should be geq 0' });
   }
   return tableService
-    .getInfo(skip, lim)
+    .getAllInfo(skip, lim)
     .then((response) => {
       console.log(response);
       return res.status(200).json(response);
