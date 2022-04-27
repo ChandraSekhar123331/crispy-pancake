@@ -1,4 +1,4 @@
-const tableService = require('../../services/table');
+const tableService = require('../../services/table/crud');
 
 const insert = function insert(req, res) {
   const occupancy = req.query.occ;
@@ -11,7 +11,9 @@ const insert = function insert(req, res) {
     return res.status(409).json({ message: "position can't be null" });
   }
   if (occupancy <= 0) {
-    return res.status(409).json({ message: 'occupancy should be greater than 0' });
+    return res
+      .status(409)
+      .json({ message: 'occupancy should be greater than 0' });
   }
   return tableService
     .insert(position, occupancy)
@@ -36,7 +38,9 @@ const update = function update(req, res) {
     return res.status(409).json({ message: "position can't be null" });
   }
   if (occupancy <= 0) {
-    return res.status(409).json({ message: 'occupancy should be greater than 0' });
+    return res
+      .status(409)
+      .json({ message: 'occupancy should be greater than 0' });
   }
   return tableService
     .update(tableId, position, occupancy)
@@ -57,7 +61,7 @@ const dlete = function dlete(req, res) {
     .catch((error) => res.status(409).json(error));
 };
 
-const getInfo = function getInfo(req, res) {
+const getAllInfo = function getAllInfo(req, res) {
   const { skip } = req.query;
   const { lim } = req.query;
   if (skip == null || lim == null || skip < 0 || lim < 0) {
@@ -72,7 +76,10 @@ const getInfo = function getInfo(req, res) {
     .catch((error) => res.status(409).json(error));
 };
 
+const getOneInfo = function getOneInfo(req, res) {};
+
 exports.insert = insert;
 exports.update = update;
 exports.dlete = dlete;
-exports.getInfo = getInfo;
+exports.getAllInfo = getAllInfo;
+exports.getOneInfo = getOneInfo;

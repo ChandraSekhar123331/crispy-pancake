@@ -8,7 +8,8 @@ const tableController = require('../controllers/table/table');
 router.post('/insert', crudController.insert);
 router.post('/delete', crudController.dlete);
 router.post('/update', crudController.update);
-router.get('/get_info', crudController.getInfo);
+router.get('/getAllInfo', crudController.getAllInfo);
+router.get('/getOneInfo', crudController.getOneInfo);
 router.get('/getFreeTables', tableController.getFreeTables);
 router.post('/bookTable', tableController.bookTable);
 
