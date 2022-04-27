@@ -24,3 +24,9 @@
   - delete a table
   - GetFree Tables doable
   - Book table a bit difficult ig.. Need to understand the bill_id column present.
+
+- We need to store prices along with ordered_items. Otherwise things will go wrong if the price is updated for dishes or stock.
+
+- Need to add >0 constraints in the database. For stock and others also. Otherwise any minReqd would get inserted.
+
+- delete and update on stock items is not yet implemented. Rest-3 (getOneInfo, getAllInfo, create/insert)

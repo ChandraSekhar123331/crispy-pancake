@@ -20,7 +20,7 @@ const configureRoutes = function configureRoutes(app) {
   app.use('/employee/attendant', attendantRoutes);
   app.use('/employee/chef', chefRoutes);
   app.use('/employee/manager', managerRoutes);
-  app.user('/employee', employeeRoutes);
+  app.use('/employee', employeeRoutes);
   app.use('/ingredients', ingredientsRoutes);
   app.use('/stock', stockRoutes);
   app.use('/table', tblRoutes);
