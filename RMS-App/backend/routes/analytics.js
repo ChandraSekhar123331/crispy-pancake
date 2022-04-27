@@ -9,3 +9,5 @@ router.get(
   analyticsDishController.worstDishByRevenue,
 );
 router.get('/worst-dishes-bySales', analyticsDishController.worstDishBySales);
+
+module.exports = router;

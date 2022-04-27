@@ -1,3 +1,5 @@
+// dlete function (most likely) can directly be implemented in common file
+
 const managerCrudService = require('../../../services/employee/manager/crud');
 
 const insert = function insert(req, res) {
@@ -69,13 +71,10 @@ const insert = function insert(req, res) {
 
 const update = function update(req, res) {};
 
-const dlete = function dlete(req, res) {};
-
 const getAllInfo = function getAllInfo(req, res) {};
 
 const getOneInfo = function getOneInfo(req, res) {};
 exports.insert = insert;
 exports.update = update;
-exports.dlete = dlete;
 exports.getAllInfo = getAllInfo;
 exports.getOneInfo = getOneInfo;

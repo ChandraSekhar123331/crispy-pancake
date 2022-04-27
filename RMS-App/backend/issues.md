@@ -7,6 +7,16 @@
 
 - We are storing billid in table-booking table. Is this good? User generally will book the table first and later will eat and then pay the bill..
 
+- Need to take decision if we have to implement the delete of employees in the Employee table and cascade? or what? Should we implement delete at all? We need to ig because we had the use case of fire an employee
+
+- This leads to deleting orders whose attendant is being deleted? What to do in such a case? Can we escape?
+
+- On delete he should be logged out also... Their sessions are to be cleared.. What not.. Think this is going to be a big mess.
+
+- Right Now the delete entry is not even present in the employee table. So for now no allowance to deletes on employees. Need to add this later.
+
+- Check if /employee routes are working well. Because we already have the routes = /employee/chef etc.
+
 - Tables
 
   - create table

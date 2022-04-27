@@ -8,3 +8,5 @@ router.post('/delete', stockCrudController.dlete);
 router.post('/update', stockCrudController.update);
 router.get('/getAllInfo', stockCrudController.getAllInfo);
 router.get('/getOneInfo', stockCrudController.getOneInfo);
+
+module.exports = router;

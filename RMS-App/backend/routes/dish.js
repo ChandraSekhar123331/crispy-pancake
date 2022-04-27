@@ -8,3 +8,5 @@ router.post('/delete', dishCrudController.dlete);
 router.post('/update', dishCrudController.update);
 router.get('/getAllInfo', dishCrudController.getAllInfo);
 router.get('/getOneInfo', dishCrudController.getOneInfo);
+
+module.exports = router;

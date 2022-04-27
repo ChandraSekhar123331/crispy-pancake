@@ -11,3 +11,5 @@ router.get('/getOneinfo', billCrudController.getOneInfo);
 // Changing a bill is illegal :)
 // router.post('/delete', (req, res) => res.status(404).send('Work in progress'));
 // router.post('/update', (req, res) => res.status(404).send('Work in progress'));
+
+module.exports = router;

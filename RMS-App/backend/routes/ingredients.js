@@ -8,3 +8,5 @@ router.post('/delete', ingredCrudController.dlete);
 router.post('/update', ingredCrudController.update);
 router.get('/getAllInfo', ingredCrudController.getAllInfo);
 router.get('/getOneInfo', ingredCrudController.getOneInfo);
+
+module.exports = router;
