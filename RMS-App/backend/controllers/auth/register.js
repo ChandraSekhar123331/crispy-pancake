@@ -1,6 +1,7 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
+const registerService = require('../../services/register');
 
-const register_user = function (req, res) {
+const registerUser = function registerUser(req, res) {
   const { firstname, surname, email, password } = req.query;
   if (
     firstname == null ||
@@ -12,8 +13,8 @@ const register_user = function (req, res) {
   }
 
   const hashedPassword = bcrypt.hashSync(password, 10);
-  require("../services/register")
-    .register_user(firstname, surname, email, hashedPassword)
+  return registerService
+    .registerUser(firstname, surname, email, hashedPassword)
     .then((response) => {
       const user = response;
       req.session.user = {
@@ -27,8 +28,8 @@ const register_user = function (req, res) {
     })
     .catch(() => {
       res.status(403);
-      return res.json({ error_message: "Unable to insert the user" });
+      return res.json({ message: 'Unable to insert the user' });
     });
 };
 
-exports.register_user = register_user;
+exports.registerUser = registerUser;

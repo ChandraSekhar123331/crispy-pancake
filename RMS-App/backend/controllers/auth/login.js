@@ -1,14 +1,15 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
+const loginService = require('../../services/login');
 
-const login_user = function (req, res) {
+const loginUser = function loginUser(req, res) {
   const { email, password } = req.query;
 
   if (email == null || password == null) {
     return res.sendStatus(403);
   }
 
-  require("../../services/login")
-    .login_user(email)
+  return loginService
+    .loginUser(email)
     .then((response) => {
       const user = response;
       const matches = bcrypt.compareSync(password, user.password);
@@ -32,4 +33,4 @@ const login_user = function (req, res) {
     });
 };
 
-exports.login_user = login_user;
+exports.loginUser = loginUser;

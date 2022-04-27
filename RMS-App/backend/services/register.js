@@ -1,17 +1,20 @@
-const pool_obj = require("./connect_db").pool_obj;
+const { poolObj } = require('./connectDb');
 
-const register_user = function (firstname, surname, email, password) {
-  query = `INSERT INTO users(firstname, surname, email, password)
+const registerUser = function registerUser(
+  firstname,
+  surname,
+  email,
+  password,
+) {
+  const query = `INSERT INTO users(firstname, surname, email, password)
   VALUES ($1, $2, $3, $4) RETURNING *`;
-  return pool_obj
+  return poolObj
     .query(query, [firstname, surname, email, password])
-    .then((response) => {
-      return Promise.resolve(response.rows[0]);
-    })
+    .then((response) => Promise.resolve(response.rows[0]))
     .catch((error) => {
-      console.log("Unable to register the user");
+      console.log('Unable to register the user');
       return Promise.reject(error);
     });
 };
 
-exports.register_user = register_user;
+exports.registerUser = registerUser;

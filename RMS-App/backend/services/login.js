@@ -1,31 +1,28 @@
-const pool_obj = require("./connect_db").pool_obj;
+const { poolObj } = require('./connectDb');
 
-const login_user = function (email) {
-  query = `SELECT id, firstname, surname, email, password FROM 
+const loginUser = function loginUser(email) {
+  const query = `SELECT id, firstname, surname, email, password FROM 
   users WHERE email = $1`;
-  return pool_obj
+  return poolObj
     .query(query, [email])
     .then((response) => {
-      let result = {
+      const result = {
         success: false,
-        error_message: "",
+        message: '',
         result: null,
       };
-      if (response.rowCount == 0) {
+      if (response.rowCount === 0) {
         result.success = false;
-        result.error_message = "User with this email doesnot exist";
+        result.message = 'User with this email doesnot exist';
         result.result = null;
         return Promise.reject(result);
-      } else {
-        result.success = true;
-        result.error_message = "";
-        result.result = response.rows[0];
-        return Promise.resolve(result);
       }
+      result.success = true;
+      result.message = '';
+      [result.result] = response.rows;
+      return Promise.resolve(result);
     })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+    .catch((error) => Promise.reject(error));
 };
 
-exports.login_user = login_user;
+exports.loginUser = loginUser;

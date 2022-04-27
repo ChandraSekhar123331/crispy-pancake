@@ -1,13 +1,13 @@
-const register_controller = require("../controllers/auth/register");
-const login_controller = require("../controllers/auth/login");
-const logout_controller = require("../controllers/auth/logout");
-const fetch_user_controller = require("../controllers/auth/fetch-user");
+const express = require('express');
+const registerController = require('../controllers/auth/register');
+const loginController = require('../controllers/auth/login');
+const logoutController = require('../controllers/auth/logout');
+const fetchUserController = require('../controllers/auth/fetchUser');
 
-const express = require("express");
-let router = express.Router();
-router.post("/register", register_controller.register_user);
-router.post("/login", login_controller.login_user);
-router.post("/logout", logout_controller.logout_user);
-router.post("/fetch-user", fetch_user_controller.fetch_user);
+const router = express.Router();
+router.post('/register', registerController.registerUser);
+router.post('/login', loginController.loginUser);
+router.post('/logout', logoutController.logoutUser);
+router.post('/fetch-user', fetchUserController.fetchUser);
 
 module.exports = router;

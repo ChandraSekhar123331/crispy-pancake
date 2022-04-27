@@ -1,11 +1,10 @@
-const logout_user = async function (req, res) {
+const logoutUser = async function logoutUser(req, res) {
   try {
     await req.session.destroy();
     return res.sendStatus(200);
   } catch (e) {
-    console.log(e);
     return res.sendStatus(500);
   }
 };
 
-exports.logout_user = logout_user;
+exports.logoutUser = logoutUser;

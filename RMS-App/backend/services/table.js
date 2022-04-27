@@ -1,92 +1,98 @@
-const { response } = require("express");
+const { poolObj } = require('./connectDb');
 
-const pool_obj = require("./connect_db").pool_obj;
-
-const insert = function (position, occupancy) {
-  query = `insert into tbl(postion, occupancy) values ($1, $2)
+const insert = function insert(position, occupancy) {
+  const query = `insert into tbl(postion, occupancy) values ($1, $2)
   returning *`;
 
-  return pool_obj
+  return poolObj
     .query(query, [position, occupancy])
-    .then((response) => {
-      return Promise.resolve({
-        message: "Success",
+    .then((response) =>
+      Promise.resolve({
+        message: 'Success',
         code: null,
         response: response.rows,
-      });
-    })
-    .catch((error) => {
-      return Promise.reject({
-        message: error.message,
-        code: error.code,
-        response: null,
-      });
-    });
+      }),
+    )
+    .catch((error) =>
+      Promise.reject(
+        new Error({
+          message: error.message,
+          code: error.code,
+          response: null,
+        }),
+      ),
+    );
 };
 
-const dlete = function (table_id) {
-  query = `delete * from tbl where tbl.table_id = $1 returning *`;
+const dlete = function dlete(tableId) {
+  const query = 'delete * from tbl where tbl.table_id = $1 returning *';
 
-  return pool_obj
-    .query(query, [table_id])
-    .then((response) => {
-      return Promise.resolve({
-        message: "Success",
+  return poolObj
+    .query(query, [tableId])
+    .then((response) =>
+      Promise.resolve({
+        message: 'Success',
         code: null,
         response: response.rows,
-      });
-    })
-    .catch((error) => {
-      return Promise.reject({
-        message: error.message,
-        code: error.code,
-        response: null,
-      });
-    });
+      }),
+    )
+    .catch((error) =>
+      Promise.reject(
+        new Error({
+          message: error.message,
+          code: error.code,
+          response: null,
+        }),
+      ),
+    );
 };
 
-const update = function (table_id, position, occupancy) {
-  query = `Update tbl
+const update = function update(tableId, position, occupancy) {
+  const query = `Update tbl
   set position = $2, occupancy = $3
   where tbl.table_id = $1
   returning *`;
 
-  return pool_obj
-    .query(query, [table_id, position, occupancy])
-    .then((response) => {
-      return Promise.resolve({
-        message: "Success",
+  return poolObj
+    .query(query, [tableId, position, occupancy])
+    .then((response) =>
+      Promise.resolve({
+        message: 'Success',
         code: null,
         response: response.rows,
-      });
-    })
-    .catch((error) => {
-      return Promise.reject({
-        message: error.message,
-        code: error.code,
-        response: null,
-      });
-    });
+      }),
+    )
+    .catch((error) =>
+      Promise.reject(
+        new Error({
+          message: error.message,
+          code: error.code,
+          response: null,
+        }),
+      ),
+    );
 };
 
-const get_info = function (skip, lim) {
-  query = `select * from tbl 
+const getInfo = function getInfo(skip, lim) {
+  const query = `select * from tbl 
   limit $2 offset $1`;
-  return pool_obj.query(query, [skip, lim]).then((response) => {
-    return Promise.resolve({
-      message: "Success",
+  return poolObj.query(query, [skip, lim]).then((response) =>
+    Promise.resolve({
+      message: 'Success',
       code: null,
       response: response.rows,
-    }).catch((error) => {
-      return Promise.reject({
-        message: error.message,
-        code: error.code,
-        response: null,
-      });
-    });
-  });
+    }).catch((error) =>
+      Promise.reject(
+        new Error({
+          message: error.message,
+          code: error.code,
+          response: null,
+        }),
+      ),
+    ),
+  );
 };
 exports.insert = insert;
 exports.dlete = dlete;
 exports.update = update;
-exports.get_info = get_info;
+exports.getInfo = getInfo;

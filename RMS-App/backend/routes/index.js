@@ -1,9 +1,9 @@
-const auth_routes = require("./auth");
-const tbl_routes = require("./table");
+const authRoutes = require('./auth');
+const tblRoutes = require('./table');
 
-const configure_routes = function (app) {
-  app.use("/auth", auth_routes);
-  app.use("/table", tbl_routes);
+const configureRoutes = function configureRoutes(app) {
+  app.use('/auth', authRoutes);
+  app.use('/table', tblRoutes);
 };
 
-module.exports = configure_routes;
+module.exports = configureRoutes;
