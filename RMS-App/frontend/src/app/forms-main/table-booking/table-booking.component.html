@@ -1,0 +1,29 @@
+<div class="full-page mid-center">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Table booking</h2>
+            <div class="subtitle">Select a date and time for the fixture.</div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+                <div class="form-group" [class.valid]="bookingForm.controls['datetime'].valid">
+                    <label for="datetime">Date and Time</label>
+                    <input type="datetime-local" id="datetime" formControlName="datetime" />
+                </div>
+                <div class="form-group">
+                    <label for="size">Party Size</label>
+                    <div class="input" id="size">
+                        <span class="num-controls nc-l" [class.disabled]="bookingForm.controls['size'].value == 1"
+                            (click)="decrement('size', 1)">&#10148;</span>
+                        {{bookingForm.controls['size'].value}}
+                        <span class="num-controls nc-r" [class.disabled]="bookingForm.controls['size'].value == 10"
+                            (click)="increment('size', 10)">&#10148;</span>
+                    </div>
+                </div>
+                <button type="submit" [disabled]="!bookingForm.valid || formStatus != 0">
+                    {{formStatus == 0 ? "Book" : "Booking..."}}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

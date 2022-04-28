@@ -1,0 +1,314 @@
+:root {
+    --color-primary: #5675f1;
+    --color-primary-dark: #5675f1b6;
+    --body-background: #12131a;
+    --color-affirmative: #00b14a;
+    --color-negative: #ff4d4d;
+    --text-color: #eeeeff;
+    --tick-clip-path: polygon(14% 44%, 0 65%, 40% 100%, 100% 26%, 80% 10%, 35% 65%);
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--body-background);
+    background-size: cover;
+}
+
+* {
+    box-sizing: border-box;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    color: var(--text-color);
+    font-family: "Segoe UI Text", sans-serif;
+}
+
+a {
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        height: 1.5px;
+        width: 100%;
+        background: var(--color-primary);
+    }
+}
+
+.full-page {
+    height: 100vh;
+    width: 100vw;
+}
+
+.mid-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 40vw;
+    backdrop-filter: blur(10px);
+    padding: 40px 60px;
+    border-radius: 20px;
+    background: linear-gradient(-45deg, #0002, #1112);
+
+    .card-header {
+        padding-bottom: 20px;
+        .card-title {
+            margin: 0 0 4px 0;
+        }
+
+        .subtitle {
+            color: #ccd;
+
+            a {
+                color: var(--text-color);
+            }
+        }
+    }
+}
+
+.form-group {
+    padding: 7px 0;
+    position: relative;
+
+    label {
+        display: inline-block;
+        user-select: none;
+        transform: translate(10px, 7px);
+        background-color: #191919;
+    }
+
+    #show-hide {
+        float: right;
+        background-color: #191919;
+        transform: translate(-10px, 7px);
+    }
+
+    .input,
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="datetime-local"],
+    input[type="number"] {
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+        background: transparent;
+        transition: all 0.2s;
+        border: none;
+        border-radius: 7px;
+        font-size: 0.95em;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+
+    input[type="datetime-local"] {
+        -webkit-appearance: none;
+
+        &::-webkit-calendar-picker-indicator {
+            display: none;
+        }
+
+        &::-webkit-datetime-edit-year-field,
+        &::-webkit-datetime-edit-month-field,
+        &::-webkit-datetime-edit-day-field,
+        &::-webkit-datetime-edit-hour-field,
+        &::-webkit-datetime-edit-minute-field {
+            &:focus {
+                background: transparent;
+                color: var(--color-primary);
+            }
+        }
+    }
+
+    &::after {
+        position: absolute;
+        content: "";
+        right: calc(0.175em + 13px);
+        top: calc(1.175em + 22.5px);
+        width: 0.8em;
+        height: 0.8em;
+        box-shadow: 1em 1em var(--color-affirmative) inset;
+        transform-origin: bottom left;
+        clip-path: var(--tick-clip-path);
+        transition: transform-origin 0s 0.1s, transform 0.1s;
+        transform: scale(0);
+    }
+
+    &.valid {
+        &::after {
+            transition: transform 0.1s;
+            transform-origin: center;
+            transform: scale(1);
+        }
+    }
+}
+
+button {
+    user-select: none;
+    padding: 10px 20px;
+    font-size: 0.95em;
+    border-radius: 7px;
+    background: var(--color-primary);
+    color: var(--body-background);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+
+    &:disabled {
+        background: var(--color-primary-dark);
+        cursor: not-allowed;
+    }
+
+    &:not(:disabled) {
+        &:active {
+            box-shadow: 0 0 0 #000, 0 0 0 #fff2;
+            transform: translateY(2px);
+        }
+    }
+}
+
+.card,
+.input,
+input,
+button,
+table {
+    box-shadow: -2px -2px 4px #000, 2px 2px 4px #fff3;
+}
+
+.num-controls {
+    cursor: pointer;
+    text-shadow: -2px -2px 4px #000, 2px 2px 4px #fff3;
+    color: var(--text-color);
+    transition: all 0.2s;
+    user-select: none;
+
+    &.nc-l {
+        float: left;
+        margin-left: 5px;
+        transform: scale(-1.3, 1.3);
+
+        &:active {
+            transform: scale(-1.3, 1.3) translateY(2px);
+        }
+    }
+    &.nc-r {
+        float: right;
+        margin-right: 5px;
+        transform: scale(1.3);
+
+        &:active {
+            transform: scale(1.3) translateY(2px);
+        }
+    }
+
+    &:active {
+        box-shadow: 0 0 0 #000, 0 0 0 #fff2;
+    }
+
+    &.disabled {
+        color: transparent;
+    }
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    background-color: transparent;
+    margin: 0;
+    font: inherit;
+    width: 1.15em;
+    height: 1.15em;
+    border-radius: 5px;
+    transform: translateY(0.5575em);
+    cursor: pointer;
+    display: grid;
+    position: absolute;
+    place-content: center;
+
+    & + label {
+        cursor: pointer;
+        user-select: none;
+        margin-left: 20px;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 1.15em;
+        height: 1.15em;
+        box-shadow: 1em 1em var(--color-primary) inset;
+        border-radius: 5px;
+        opacity: 0;
+        transform: scale(1.5);
+        transition: transform-origin 0s 0.1s, transform 0.1s, opacity 0.1s;
+    }
+
+    &::after {
+        position: absolute;
+        content: "";
+        width: 0.8em;
+        height: 0.8em;
+        left: 0.175em;
+        top: 0.175em;
+        box-shadow: 1em 1em var(--text-color) inset;
+        transform-origin: bottom left;
+        clip-path: var(--tick-clip-path);
+        opacity: 0;
+        transform: scale(1.5);
+        transition: transform-origin 0s 0.1s, transform 0.1s, opacity 0.1s;
+    }
+
+    &:checked {
+        &::after,
+        &::before {
+            transition: transform 0.1s, opacity 0.1s;
+            transform-origin: center;
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+}
+
+table {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border-collapse: collapse;
+
+    th,
+    td {
+        padding: 15px;
+        text-align: center;
+    }
+
+    tr {
+        border-bottom: 1.5px solid #262738;
+        padding: 0 15px;
+    }
+
+    tbody tr:last-child {
+        border-bottom: none;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 3px;
+}
