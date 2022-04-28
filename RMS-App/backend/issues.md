@@ -30,3 +30,5 @@
 - Need to add >0 constraints in the database. For stock and others also. Otherwise any minReqd would get inserted.
 
 - delete and update on stock items is not yet implemented. Rest-3 (getOneInfo, getAllInfo, create/insert)
+
+- delete and update on dish is not yet done. Need to add get_ingredients and get_cost for dishes. Ig get_cost can be merged with getOneInfo and getAllInfo functions itself as it is just an aggregate function
