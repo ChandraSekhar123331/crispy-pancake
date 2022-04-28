@@ -1,85 +1,172 @@
-const tableService = require('../../services/table/crud');
+const tableCrudService = require('../../services/table/crud');
 
 const insert = function insert(req, res) {
-  const occupancy = req.query.occ;
-  const position = req.query.posn;
+  const { occupancy, position } = req.query;
 
   if (occupancy == null) {
-    return res.status(409).json({ message: "occupancy can't be null" });
+    return res.status(409).json({
+      message: "occupancy can't be null",
+      code: -1,
+      result: null,
+    });
   }
   if (position == null) {
-    return res.status(409).json({ message: "position can't be null" });
+    return res.status(409).json({
+      message: "position can't be null",
+      code: -1,
+      result: null,
+    });
   }
   if (occupancy <= 0) {
-    return res
-      .status(409)
-      .json({ message: 'occupancy should be greater than 0' });
-  }
-  return tableService
-    .insert(position, occupancy)
-    .then((response) => {
-      res.status(200);
-      return res.json(response);
-    })
-    .catch((error) => {
-      res.status(409).json(error);
+    return res.status(409).json({
+      message: 'occupancy should be positive',
+      code: -1,
+      result: null,
     });
+  }
+  return tableCrudService
+    .insert(position, occupancy)
+    .then((response) =>
+      res.status(200).json({
+        message: 'Success',
+        code: 0,
+        result: response.result.rows[0],
+      }),
+    )
+    .catch((error) =>
+      res.status(409).json({
+        message: error.message,
+        code: -1,
+        result: null,
+      }),
+    );
 };
 
 const update = function update(req, res) {
-  const { tableId } = req.query;
-  const occupancy = req.query.occ;
-  const position = req.query.posn;
+  const { tableId, occupancy, position } = req.query;
 
   if (occupancy == null) {
-    return res.status(409).json({ message: "occupancy can't be null" });
+    return res.status(409).json({
+      message: "occupancy can't be null",
+      code: -1,
+      result: null,
+    });
   }
   if (position == null) {
-    return res.status(409).json({ message: "position can't be null" });
+    return res.status(409).json({
+      message: "position can't be null",
+      code: -1,
+      result: null,
+    });
   }
   if (occupancy <= 0) {
-    return res
-      .status(409)
-      .json({ message: 'occupancy should be greater than 0' });
+    return res.status(409).json({
+      message: 'occupancy should be positive',
+      code: -1,
+      result: null,
+    });
   }
-  return tableService
+  return tableCrudService
     .update(tableId, position, occupancy)
     .then((response) => {
-      res.status(200);
-      return res.json(response);
+      if (response.result.rowCount === 0) {
+        return res.status(409).json({
+          message: 'tableId not found in the Database. Unable to update.',
+          code: -1,
+          result: null,
+        });
+      }
+      return res.status(200).json({
+        message: 'Success',
+        code: 0,
+        result: response.result.rows[0],
+      });
     })
-    .catch((error) => {
-      res.status(409).json(error);
-    });
-};
-
-const dlete = function dlete(req, res) {
-  const { tableId } = req.query;
-  tableService
-    .dlete(tableId)
-    .then((response) => res.status(200).json(response))
-    .catch((error) => res.status(409).json(error));
+    .catch((error) =>
+      res.status(409).json({
+        message: error.message,
+        code: -1,
+        result: null,
+      }),
+    );
 };
 
 const getAllInfo = function getAllInfo(req, res) {
-  const { skip } = req.query;
-  const { lim } = req.query;
-  if (skip == null || lim == null || skip < 0 || lim < 0) {
-    return res.status(409).json({ message: 'skip, lim should be geq 0' });
+  const { skip, lim } = req.query;
+  if (skip == null || lim == null) {
+    return res.status(409).json({
+      message: "skip, lim can't be null",
+      code: -1,
+      result: null,
+    });
   }
-  return tableService
+  if (skip < 0) {
+    return res.status(409).json({
+      message: 'skip should be non-negative',
+      code: -1,
+      result: null,
+    });
+  }
+  if (lim < 0) {
+    return res.status(409).json({
+      message: 'lim should be non-negative',
+      code: -1,
+      result: null,
+    });
+  }
+  return tableCrudService
     .getAllInfo(skip, lim)
-    .then((response) => {
-      console.log(response);
-      return res.status(200).json(response);
-    })
-    .catch((error) => res.status(409).json(error));
+    .then((response) =>
+      res.status(200).json({
+        message: 'Success',
+        code: 0,
+        result: response.result.rows,
+      }),
+    )
+    .catch((error) =>
+      res.status(409).json({
+        message: error.message,
+        code: -1,
+        result: null,
+      }),
+    );
 };
 
-const getOneInfo = function getOneInfo(req, res) {};
+const getOneInfo = function getOneInfo(req, res) {
+  const { tableId } = req.query;
+  if (tableId == null) {
+    return res.status(409).json({
+      message: "tableId can't be null",
+      code: -1,
+      result: null,
+    });
+  }
+  return tableCrudService
+    .getOneInfo(tableId)
+    .then((response) => {
+      if (response.result.rowCount === 0) {
+        return res.status(409).json({
+          message: 'tableId not found in the Database',
+          code: -1,
+          result: null,
+        });
+      }
+      return res.status(200).json({
+        message: 'Success',
+        code: 0,
+        result: response.result.rows[0],
+      });
+    })
+    .catch((error) =>
+      res.status(409).json({
+        message: error.message,
+        code: -1,
+        result: null,
+      }),
+    );
+};
 
 exports.insert = insert;
 exports.update = update;
-exports.dlete = dlete;
 exports.getAllInfo = getAllInfo;
 exports.getOneInfo = getOneInfo;
