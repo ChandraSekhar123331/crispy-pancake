@@ -92,6 +92,7 @@ CREATE TABLE Ordered_items (
   bill_id bigint,
   dish_id bigint,
   quantity int,
+  price_per_unit double precision	,
   rating int,
   PRIMARY KEY (bill_id, dish_id),
   FOREIGN KEY (bill_id) REFERENCES Bill,

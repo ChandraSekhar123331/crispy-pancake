@@ -130,6 +130,7 @@ if __name__ == "__main__":
         {"col_name": "bill_id", "type_func": int},
         {"col_name": "dish_id", "type_func": int},
         {"col_name": "quantity", "type_func": int},
+        {"col_name": "price_per_unit", "type_func": float},
         {"col_name": "rating", "type_func": int},
     ]
 

@@ -43,3 +43,5 @@
 
 - // need to check if the email is already present;
   // need to check if the username is already used; in manager controller.insert. Either should do it in direct schema now.. or should do it backend using other services... Look into this.
+
+- basic Menu done. Sorts based on dish_price DESC. Maybe we can add few other menus based on sorting etc etc. But time.. not there

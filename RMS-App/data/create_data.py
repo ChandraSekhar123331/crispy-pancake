@@ -157,12 +157,18 @@ num_dishes = len(dishes)
 
 all_used_names = set()
 
+stock_prices = {}
+dish_profits = {}
+dish_prices = {}
+
+
 def get_user_name(faker, used_names):
     name = faker.name()
     while name in used_names:
         name = faker.name()
     used_names.add(name)
     return name
+
 
 def create_attendant_data(faker: Faker()):
     header = [
@@ -288,10 +294,12 @@ def create_stock_data():
     with open("data_folder/stock.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
-        for item in stock:
+        for ind, item in enumerate(stock):
             min_qt = rng.choice(10)
             qt_available = rng.choice(np.arange(10, 50)) + min_qt
-            entries = [item["name"], qt_available, min_qt, rng.choice(500) + 50]
+            entries = [item["name"], qt_available,
+                       min_qt, rng.choice(500) + 50]
+            stock_prices[1 + ind] = entries[3]
             writer.writerow(entries)
 
 
@@ -306,7 +314,7 @@ def create_dish_data():
     with open("data_folder/dish.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(header)
-        for dish in dishes:
+        for ind, dish in enumerate(dishes):
             profit_percentage = 15 + rng.choice(50)
             cuisine = cuisines[rng.choice(len(cuisines))]
             entries = [
@@ -316,6 +324,7 @@ def create_dish_data():
                 dish["item_type"],
                 profit_percentage,
             ]
+            dish_profits[1 + ind] = profit_percentage
             writer.writerow(entries)
 
 
@@ -333,11 +342,11 @@ def create_table_data():
             x = rng.choice(100)
             y = rng.choice(100)
             floor = rng.choice(10)
-            while (x,y,floor) in used_posns:
+            while (x, y, floor) in used_posns:
                 x = rng.choice(100)
                 y = rng.choice(100)
                 floor = rng.choice(10)
-            used_posns.add((x,y,floor))
+            used_posns.add((x, y, floor))
             entries = [
                 f"x = {x}, y = {y}, floor = {floor}",
                 occupancy
@@ -355,6 +364,7 @@ def create_ingredients_data():
         writer = csv.writer(file)
         writer.writerow(header)
         for dish_id, dish in enumerate(dishes):
+            dish_prices[dish_id + 1] = 0
             ingred_count = 5
             # TODO: Right now we are using any ingred irresp of it is veg or not.
             ingreds = random.sample(range(1, 1 + len(stock)), ingred_count)
@@ -365,7 +375,9 @@ def create_ingredients_data():
                     ingred_id,
                     quantity
                 ]
+                dish_prices[dish_id + 1] += stock_prices[ingred_id] * quantity
                 writer.writerow(entries)
+            dish_prices[dish_id + 1] *= (1+dish_profits[dish_id + 1]/100)
 
 
 def create_bill_data():
@@ -380,6 +392,7 @@ def create_bill_data():
         "bill_id",
         "dish_id",
         "quantity",
+        "price_per_unit",
         "rating",
     ]
 
@@ -409,7 +422,7 @@ def create_bill_data():
                     ord_items_writer.writerow(ordered_items_header)
                     tbl_booking_writer.writerow(tbl_booking_header)
                     att_by_writer.writerow(attended_by_header)
-            
+
                     curr_time = datetime.today()
                     for bill_id in range(1, num_bills + 1):
 
@@ -421,31 +434,36 @@ def create_bill_data():
                                 customer_id,
                                 curr_time + timedelta(minutes=50),
                                 btype,
-                                random.sample(["null"] + list(range(0,6)), 1)[0]
+                                random.sample(
+                                    ["null"] + list(range(0, 6)), 1)[0]
                             ]
                             attended_by_entries = [
                                 bill_id,
                                 attendant_id,
-                                random.sample(["null"] + list(range(0,6)), 1)[0]
+                                random.sample(
+                                    ["null"] + list(range(0, 6)), 1)[0]
                             ]
                             num_dishes_ordered = rng.choice(6) + 1
-                            
+
                             for dish_id in random.sample(list(range(1, num_dishes + 1)), num_dishes_ordered):
                                 ordered_items_entries = [
                                     bill_id,
                                     dish_id,
                                     rng.choice(5)+1,
-                                    random.sample(["null"] + list(range(0,6)), 1)[0]
+                                    dish_prices[dish_id],
+                                    random.sample(
+                                        ["null"] + list(range(0, 6)), 1)[0]
                                 ]
-                                ord_items_writer.writerow(ordered_items_entries)
-                            
+                                ord_items_writer.writerow(
+                                    ordered_items_entries)
+
                             bill_writer.writerow(bill_entries)
                             att_by_writer.writerow(attended_by_entries)
-                            
+
                         elif btype == "dine-in":
                             table_id = rng.choice(num_tables) + 1
                             attendant_id = rng.choice(num_attendants) + 1
-                            
+
                             tbl_booking_entries = [
                                 bill_id,
                                 table_id,
@@ -456,7 +474,8 @@ def create_bill_data():
                             attended_by_entries = [
                                 bill_id,
                                 attendant_id,
-                                random.sample(["null"] + list(range(0,6)), 1)[0]
+                                random.sample(
+                                    ["null"] + list(range(0, 6)), 1)[0]
                             ]
 
                             customer_id = rng.choice(num_customers) + 1
@@ -464,23 +483,22 @@ def create_bill_data():
                                 customer_id,
                                 curr_time + timedelta(minutes=50),
                                 btype,
-                                random.sample(["null"] + list(range(0,6)), 1)[0]
+                                random.sample(
+                                    ["null"] + list(range(0, 6)), 1)[0]
                             ]
                             bill_writer.writerow(bill_entries)
                             tbl_booking_writer.writerow(tbl_booking_entries)
-                            
+
                         # elif btype == "table-booking":
                         #     pass
                         else:
                             assert(False)
-                        
+
                         curr_time = curr_time - timedelta(days=1)
                 # writer.writerow(entries)
-        
 
 
 # def create_ingredients():
-
 
 
 if __name__ == "__main__":
