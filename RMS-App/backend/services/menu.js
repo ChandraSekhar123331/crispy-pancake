@@ -1,7 +1,7 @@
 const { poolObj } = require('./connectDb');
 
 const refreshMenu = function refreshMenu() {
-  const query = 'refresh materialised view menu';
+  const query = 'refresh materialized view menu';
 
   return poolObj
     .query(query)
