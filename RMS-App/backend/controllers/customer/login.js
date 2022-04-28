@@ -42,7 +42,7 @@ const loginUser = function loginUser(req, res) {
         fullName: user.full_name,
         emailId: user.email_id,
         address: user.cust_address,
-        role: 'Customer',
+        role: 'customer',
       };
       return res.status(200).json({
         message: 'Success',
