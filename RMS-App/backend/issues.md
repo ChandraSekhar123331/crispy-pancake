@@ -40,3 +40,6 @@
 - Should we also have an endpoint that takes in a list of ingredients for **one-dish** and add all together?. Right now we can only add one (dish_id, stock_id, quantity) in one go.
 
 - delete and update on ingredients is also not done.
+
+- // need to check if the email is already present;
+  // need to check if the username is already used; in manager controller.insert. Either should do it in direct schema now.. or should do it backend using other services... Look into this.
