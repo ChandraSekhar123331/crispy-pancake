@@ -406,6 +406,7 @@ def create_bill_data():
     attended_by_header = [
         "bill_id",
         "attendant_id",
+        "delivered",
         "rating",
     ]
 
@@ -440,6 +441,7 @@ def create_bill_data():
                             attended_by_entries = [
                                 bill_id,
                                 attendant_id,
+                                True,
                                 random.sample(
                                     ["null"] + list(range(0, 6)), 1)[0]
                             ]
@@ -474,6 +476,7 @@ def create_bill_data():
                             attended_by_entries = [
                                 bill_id,
                                 attendant_id,
+                                True,
                                 random.sample(
                                     ["null"] + list(range(0, 6)), 1)[0]
                             ]

@@ -158,7 +158,9 @@ if __name__ == "__main__":
     attended_by_cols = [
         {"col_name": "bill_id", "type_func": int},
         {"col_name": "attendant_id", "type_func": int},
+        {"col_name": "delivered", "type_func": bool},
         {"col_name": "rating", "type_func": int},
+
     ]
 
     table_booking_cols = [
