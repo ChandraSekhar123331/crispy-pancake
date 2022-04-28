@@ -32,3 +32,11 @@
 - delete and update on stock items is not yet implemented. Rest-3 (getOneInfo, getAllInfo, create/insert)
 
 - delete and update on dish is not yet done. Need to add get_ingredients and get_cost for dishes. Ig get_cost can be merged with getOneInfo and getAllInfo functions itself as it is just an aggregate function
+
+- quantity < 0 constraints are not being enforced in the backend. They should be enforced in the front-end and also in database level. There should be some cue to the front-end person that these things should not go <= 0.
+
+- Please note the semantics of ingredients.getAllInfo and ingredients.getOneInfo
+
+- Should we also have an endpoint that takes in a list of ingredients for **one-dish** and add all together?. Right now we can only add one (dish_id, stock_id, quantity) in one go.
+
+- delete and update on ingredients is also not done.
