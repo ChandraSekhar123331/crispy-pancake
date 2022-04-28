@@ -45,3 +45,9 @@
   // need to check if the username is already used; in manager controller.insert. Either should do it in direct schema now.. or should do it backend using other services... Look into this.
 
 - basic Menu done. Sorts based on dish_price DESC. Maybe we can add few other menus based on sorting etc etc. But time.. not there
+
+- Need to add role checks everywhere. RightNow not added at any place. Especially in billOnline function.
+
+- Change the delivery types in the bill table order_type column. they should be online, telephone, hotel. You should change the underlying generate data accordingly.
+
+- There will be issues with dishes with no ingredients. Just restrict it somehow. Otherwise its a headache with queries.
