@@ -51,3 +51,5 @@
 - Change the delivery types in the bill table order_type column. they should be online, telephone, hotel. You should change the underlying generate data accordingly.
 
 - There will be issues with dishes with no ingredients. Just restrict it somehow. Otherwise its a headache with queries.
+
+- Make sure that the delivered column in attended_by is never null. Otherwise we will have issues.

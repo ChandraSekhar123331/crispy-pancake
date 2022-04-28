@@ -132,7 +132,7 @@ CREATE TABLE Ingredients (
 CREATE TABLE Attended_by (
   bill_id bigint,
   attendant_id bigint,
-  delivered boolean,
+  delivered boolean not null,
   rating int,
   PRIMARY KEY (bill_id),
   FOREIGN KEY (bill_id) REFERENCES Bill,
