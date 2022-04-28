@@ -10,6 +10,7 @@ const employeeRoutes = require('./employee');
 const ingredientsRoutes = require('./ingredients');
 const stockRoutes = require('./stock');
 const tblRoutes = require('./table');
+const menuRoutes = require('./menu');
 
 const configureRoutes = function configureRoutes(app) {
   app.use('/analytics', analyticsRoutes);
@@ -24,6 +25,7 @@ const configureRoutes = function configureRoutes(app) {
   app.use('/ingredients', ingredientsRoutes);
   app.use('/stock', stockRoutes);
   app.use('/table', tblRoutes);
+  app.use('/menu', menuRoutes);
 };
 
 module.exports = configureRoutes;
