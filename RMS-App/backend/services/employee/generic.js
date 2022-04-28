@@ -51,52 +51,45 @@ const getAllInfo = function getAllInfo(skip, lim) {
     .catch((error) => Promise.reject(new Error(error.message)));
 };
 
+const insertEmployee = function insertEmployee(
+  userName,
+  empName,
+  emailId,
+  phoneNum,
+  address,
+  password,
+  role,
+  salary,
+) {
+  const query = `insert into employee(user_name, emp_name, 
+    email_id, phone_number, emp_address, emp_password, 
+    emp_role, salary
+    values($1, $2, $3, $4, $5, $6, $7, $8)
+    returning *`;
+  return poolObj
+    .query(query, [
+      userName,
+      empName,
+      emailId,
+      phoneNum,
+      address,
+      password,
+      role,
+      salary,
+    ])
+    .then((response) =>
+      Promise.resolve({
+        message: 'Success',
+        code: 0,
+        result: response,
+      }),
+    )
+    .catch((error) => Promise.reject(new Error(error.message)));
+};
+
 const update = function update() {};
 
-// const insertEmployee = function insertEmployee(
-//   userName,
-//   empName,
-//   address,
-//   emailId,
-//   phoneNum,
-//   password,
-//   role,
-//   salary,
-// ) {
-//   const query = `insert into employee(userName, empName,
-//     address, emailId, phoneNum, password, role, salary)
-//     values($1, $2, $3, $4, $5, $6, $7)
-//     returning *`;
-//   return poolObj
-//     .query(query, [
-//       userName,
-//       empName,
-//       address,
-//       emailId,
-//       phoneNum,
-//       password,
-//       role,
-//       salary,
-//     ])
-//     .then((response) =>
-//       Promise.resolve({
-//         message: 'Success',
-//         response: response.rows,
-//         code: null,
-//       }),
-//     )
-//     .catch((error) =>
-//       Promise.reject(
-//         new Error({
-//           message: error.message,
-//           response: null,
-//           code: error.code,
-//         }),
-//       ),
-//     );
-// };
-
-// exports.insert = insertEmployee;
+exports.insert = insertEmployee;
 
 exports.getUser = getUser;
 exports.getOneInfo = getOneInfo;
