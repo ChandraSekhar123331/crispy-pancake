@@ -1,0 +1,44 @@
+<div class="full-page mid-center">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Patron sign up</h2>
+            <div class="subtitle">Already registered? <a [routerLink]="['/login']">Sign in!</a></div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="form-group" [class.valid]="registerForm.controls['firstName'].valid">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" formControlName="firstName" />
+                </div>
+                <div class="form-group" [class.valid]="registerForm.controls['lastName'].valid">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" formControlName="lastName" />
+                </div>
+                <div class="form-group" [class.valid]="registerForm.controls['username'].valid">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" formControlName="username" />
+                </div>
+                <div class="form-group" [class.valid]="registerForm.controls['email'].valid">
+                    <label for="email">Email ID</label>
+                    <input type="email" id="email" formControlName="email" />
+                </div>
+                <div class="form-group" [class.valid]="registerForm.controls['password'].valid">
+                    <label for="password">Password</label>
+                    <a id="show-hide" (click)="showPassword = !showPassword"><small>{{showPassword ? 'Hide' :
+                            'Show'}}</small></a>
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+                        spellcheck="false" />
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" value="" id="terms" formControlName="terms" />
+                    <label for="terms">
+                        I accept the terms and conditions.
+                    </label>
+                </div>
+                <button type="submit" [disabled]="!registerForm.valid || formStatus != 0">
+                    {{formStatus == 0 ? "Sign up" : "Signing up..."}}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

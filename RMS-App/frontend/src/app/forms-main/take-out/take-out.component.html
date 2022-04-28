@@ -1,0 +1,82 @@
+<div class="full-page mid-center">
+    <div class="card-grid">
+        <div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Take-out order</h2>
+                    <div class="subtitle">Please select the dishes and checkout.</div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="currentOrderForm" (ngSubmit)="onAdd()">
+                        <div class="fg-group">
+                            <div class="form-group" [class.valid]="currentOrderForm.controls['dish_id'].valid">
+                                <label for="dish_id">Dish ID</label>
+                                <input type="number" class="form-control" id="dish_id" formControlName="dish_id">
+                            </div>
+                            <div class="form-group" [class.valid]="currentOrderForm.controls['quantity'].valid">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" class="form-control" id="quantity" formControlName="quantity">
+                            </div>
+                        </div>
+                        <button type="submit" [disabled]="!currentOrderForm.valid || formStatus != 0">
+                            {{formStatus == 0 ? "Add item" : "Adding item..."}}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="h-grid">
+                        <h2 class="card-title">Your order <span id="total">₹ {{totalPrice() | number:'1.2-2'}}
+                            </span></h2>
+                        <div class="subtitle">Click on the quantity to delete an item.</div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <colgroup>
+                            <col width="15%">
+                            <col width="30%">
+                            <col width="25%">
+                            <col width="30%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>DID</th>
+                                <th>Title</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="order.size != 0">
+                            <tr *ngFor="let item of order.entries()">
+                                <td>{{item[0]}}</td>
+                                <td>{{item[1][0]}}</td>
+                                <td>
+                                    <span class="num-controls nc-l" [class.disabled]="item[1][1] == 1"
+                                        (click)="item[1][1] = item[1][1] == 1 ? 1 : item[1][1] - 1">&#10148;</span>
+                                    <span class="td-quantity"
+                                        (click)="removeItem(item[0])"><span>{{item[1][1]}}</span></span>
+                                    <span class="num-controls nc-r"
+                                        (click)="item[1][1] = item[1][1] + 1">&#10148;</span>
+                                </td>
+                                <td>₹ {{item[1][1] * item[1][2] | number:'1.2-2'}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="order.size == 0">
+                            <tr>
+                                <td colspan="4">No items added yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" [disabled]="order.size == 0 || submissionStatus != 0">
+                    {{submissionStatus == 0 ? "Book order" : "Booking order..."}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

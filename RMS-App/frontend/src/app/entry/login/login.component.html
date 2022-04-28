@@ -1,0 +1,29 @@
+<div class="full-page mid-center">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">{{signingInAs == 0 ? "Patron" : "Employee"}} sign in</h2>
+            <div class="subtitle" *ngIf="signingInAs == 0">Not registered yet? <a [routerLink]="['/register']">Sign up!</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group" [class.valid]="loginForm.controls['username'].valid">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" formControlName="username" />
+                </div>
+                <div class="form-group" [class.valid]="loginForm.controls['password'].valid">
+                    <label for="password">Password</label>
+                    <a id="show-hide" (click)="showPassword = !showPassword"><small>{{showPassword ? 'Hide' :
+                            'Show'}}</small></a>
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password"
+                        formControlName="password" spellcheck="false" />
+                </div>
+                <button type="submit" [disabled]="!loginForm.valid || formStatus != 0">
+                    {{formStatus == 0 ? "Sign in" : "Signing in..."}}
+                </button>
+            </form>
+        </div>
+    </div>
+    <div id="switch-prompt"><a (click)="signingInAs = 1 - signingInAs">I am a{{signingInAs == 0 ? "n employee" :
+            " patron"}}</a></div>
+</div>
