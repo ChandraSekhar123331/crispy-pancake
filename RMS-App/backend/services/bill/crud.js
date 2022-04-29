@@ -2,7 +2,8 @@ const { poolObj } = require('../connectDb');
 
 const insert = function insert(customerId, orderType) {
   const query = `insert into bill(customer_id, order_type, bill_time)
-  values($1, $2, localtimestamp)`;
+  values($1, $2, localtimestamp)
+  returning *`;
 
   return poolObj
     .query(query, [customerId, orderType])

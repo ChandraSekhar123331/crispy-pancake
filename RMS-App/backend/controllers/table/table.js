@@ -31,6 +31,7 @@ const getFreeTables = function getFreeTables(req, res) {
 
 const bookTable = function bookTable(req, res) {
   const { tableList, startTime } = req.body;
+  // assuming that the tableList that reaches here is a valid non clashing one.
   if (tableList == null) {
     return res.status(409).json({
       message: "tableList can't be null",
