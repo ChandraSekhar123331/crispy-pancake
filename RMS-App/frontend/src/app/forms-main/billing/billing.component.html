@@ -3,9 +3,46 @@
         <div>
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Take-out order</h2>
-                    <div class="subtitle">Please select the dishes and checkout.</div>
+                    <h2 class="card-title">Dine-in billing</h2>
+                    <div class="subtitle" *ngIf="!identified"><a (click)="registered = !registered">Customer is <span
+                                *ngIf="registered">not</span> already registered.</a></div>
                 </div>
+                <div class="card-body">
+                    <form [formGroup]="customerInfoForm" (ngSubmit)="onAdd()" *ngIf="!identified">
+                        <div class="form-group" [class.valid]="customerInfoForm.controls['username'].valid"
+                            *ngIf="!usingEmail && registered">
+                            <label for="username">Customer's <a (click)="usingEmail = true">Username</a></label>
+                            <input type="text" id="username" formControlName="username">
+                        </div>
+                        <div class="form-group" [class.valid]="customerInfoForm.controls['email'].valid"
+                            *ngIf="usingEmail && registered">
+                            <label for="email">Customer's <a (click)="usingEmail = false">Email</a></label>
+                            <input type="email" id="email" formControlName="email">
+                        </div>
+                        <div class="form-group" [class.valid]="customerInfoForm.controls['email'].valid"
+                            *ngIf="!registered">
+                            <label for="name">Customer's Name</label>
+                            <input type="text" id="name" formControlName="name">
+                        </div>
+                        <button type="submit" *ngIf="registered" (click)="onCheck()"
+                            [disabled]="!(customerInfoForm.controls[usingEmail ? 'email' : 'username'].valid) || ciFormStatus != 0">
+                            {{ciFormStatus == 0 ? "Check" : "Checking..."}}
+                        </button>
+                        {{Array.from(order)[0]}}
+                        <button *ngIf="!registered" (click)="onCheck()"
+                            [disabled]="!(customerInfoForm.controls['name'].valid) || ciFormStatus != 0">
+                            Continue
+                        </button>
+                    </form>
+
+                    <div class="customer-info" *ngIf="identified">
+                        <div style="font-weight: normal; font-size: 1.2em;">{{name}}</div>
+                        <div class="subtitle">User ID: {{registered ? userId : "unregistered"}}</div>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 25px;"></div>
+            <div class="card" *ngIf="identified">
                 <div class="card-body">
                     <form [formGroup]="currentOrderForm" (ngSubmit)="onAdd()">
                         <div class="fg-group">
@@ -27,7 +64,7 @@
         </div>
 
         <div>
-            <div class="card">
+            <div class="card" *ngIf="identified">
                 <div class="card-header">
                     <div class="h-grid">
                         <h2 class="card-title">Your order <span id="total">₹ {{totalPrice() | number:'1.2-2'}}
@@ -72,7 +109,7 @@
                     </table>
                 </div>
                 <button type="submit" [disabled]="order.size == 0 || formStatus != 0">
-                    {{formStatus == 0 ? "Book order" : "Booking order..."}}
+                    {{formStatus == 0 ? "Generate bill" : "Generating bill..."}}
                 </button>
             </div>
         </div>

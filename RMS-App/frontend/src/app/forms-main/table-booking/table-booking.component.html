@@ -14,10 +14,10 @@
                     <label for="size">Party Size</label>
                     <div class="input" id="size">
                         <span class="num-controls nc-l" [class.disabled]="bookingForm.controls['size'].value == 1"
-                            (click)="decrement('size', 1)">&#10148;</span>
+                            (click)="decrement(bookingForm, 'size', 1)">&#10148;</span>
                         {{bookingForm.controls['size'].value}}
                         <span class="num-controls nc-r" [class.disabled]="bookingForm.controls['size'].value == 10"
-                            (click)="increment('size', 10)">&#10148;</span>
+                            (click)="increment(bookingForm, 'size', 10)">&#10148;</span>
                     </div>
                 </div>
                 <button type="submit" [disabled]="!bookingForm.valid || formStatus != 0">

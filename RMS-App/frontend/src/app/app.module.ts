@@ -5,7 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { EntryModule } from './entry/entry.module';
+import { AdminModule } from './admin/admin.module';
 import { FormsMainModule } from './forms-main/forms-main.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,12 @@ import { FormsMainModule } from './forms-main/forms-main.module';
     BrowserModule,
     AppRoutingModule,
     EntryModule,
-    FormsMainModule
+    FormsMainModule,
+    RouterModule.forRoot([
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'admin', loadChildren: () => AdminModule },
+      { path: '**', redirectTo: 'entry' }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -6,6 +6,7 @@
     --color-negative: #ff4d4d;
     --text-color: #eeeeff;
     --tick-clip-path: polygon(14% 44%, 0 65%, 40% 100%, 100% 26%, 80% 10%, 35% 65%);
+    --nm-shadow: -3px -3px 6px #000, 3px 3px 6px #fff3;
 }
 
 html,
@@ -83,7 +84,7 @@ a {
         display: inline-block;
         user-select: none;
         transform: translate(10px, 7px);
-        background-color: #191919;
+        background: inherit;
     }
 
     #show-hide {
@@ -156,6 +157,14 @@ a {
     }
 }
 
+.card,
+button,
+.table-container,
+.input,
+input {
+    box-shadow: var(--nm-shadow);
+}
+
 button {
     user-select: none;
     padding: 10px 20px;
@@ -179,19 +188,17 @@ button {
             transform: translateY(2px);
         }
     }
-}
 
-.card,
-.input,
-input,
-button,
-table {
-    box-shadow: -2px -2px 4px #000, 2px 2px 4px #fff3;
+    &.secondary {
+        font-weight: normal;
+        background: var(--body-background);
+        color: var(--color-primary);
+    }
 }
 
 .num-controls {
     cursor: pointer;
-    text-shadow: -2px -2px 4px #000, 2px 2px 4px #fff3;
+    text-shadow: var(--nm-shadow);
     color: var(--text-color);
     transition: all 0.2s;
     user-select: none;
