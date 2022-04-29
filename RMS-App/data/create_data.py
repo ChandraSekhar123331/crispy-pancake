@@ -15,7 +15,7 @@ num_tables = 100
 
 
 num_bills = 10000
-bill_types = ["online delivery", "dine-in"]
+bill_types = ["online", "hotel"]
 # num_table_bookings = 1000
 
 attendant_roles = ["online", "hotel"]
@@ -434,7 +434,7 @@ def create_bill_data():
                     for bill_id in range(1, num_bills + 1):
 
                         btype = random.sample(bill_types, 1)[0]
-                        if btype == "online delivery":
+                        if btype == "online":
                             customer_id = rng.choice(num_customers) + 1
                             attendant_id = rng.choice(num_attendants) + 1
                             bill_entries = [
@@ -468,7 +468,7 @@ def create_bill_data():
                             bill_writer.writerow(bill_entries)
                             att_by_writer.writerow(attended_by_entries)
 
-                        elif btype == "dine-in":
+                        elif btype == "hotel":
                             table_id = rng.choice(num_tables) + 1
                             attendant_id = rng.choice(num_attendants) + 1
 
