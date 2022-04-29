@@ -22,7 +22,7 @@ const getOneInfo = function getOneInfo(empId) {
   emp_address, emp_role, salary, attendant_role
   from employee, attendant
   where employee.emp_id = attendant.attendant_id
-  and employee.emp_id = $1`;
+  and employee.emp_id = $1 and fired=false`;
   return poolObj
     .query(query, [empId])
     .then((response) =>
@@ -39,7 +39,7 @@ const getAllInfo = function getAllInfo(skip, lim) {
   const query = `select emp_id, emp_name, email_id, phone_number, 
   emp_address, emp_role, salary, attendant_role
   from employee, attendant
-  where employee.emp_id = attendant.attendant_id
+  where employee.emp_id = attendant.attendant_id and fired=false
   limit $1
   offset $2;`;
   return poolObj

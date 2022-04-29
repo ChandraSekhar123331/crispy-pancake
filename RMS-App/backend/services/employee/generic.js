@@ -66,8 +66,8 @@ const insertEmployee = function insertEmployee(
 ) {
   const query = `insert into employee(user_name, emp_name, 
     email_id, phone_number, emp_address, emp_password, 
-    emp_role, salary
-    values($1, $2, $3, $4, $5, $6, $7, $8)
+    emp_role, salary, fired)
+    values($1, $2, $3, $4, $5, $6, $7, $8, false)
     returning *`;
   return poolObj
     .query(query, [
