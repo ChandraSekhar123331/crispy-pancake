@@ -37,7 +37,8 @@ CREATE TABLE Employee (
   salary bigint,
   fired boolean,
   PRIMARY KEY(emp_id),
-  UNIQUE (user_name)
+  UNIQUE (user_name),
+  UNIQUE(email_id)
 );
 
 
@@ -49,7 +50,9 @@ CREATE TABLE Customer (
   phone_number varchar,
   cust_address varchar,
   cust_password varchar,
-  PRIMARY KEY (customer_id)
+  PRIMARY KEY (customer_id),
+  UNIQUE(user_name),
+  UNIQUE(email_id)
 );
 
 

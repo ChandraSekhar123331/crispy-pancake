@@ -156,6 +156,7 @@ num_stock = len(stock)
 num_dishes = len(dishes)
 
 all_used_names = set()
+all_used_emails = set()
 
 stock_prices = {}
 dish_profits = {}
@@ -169,6 +170,12 @@ def get_user_name(faker, used_names):
     used_names.add(name)
     return name
 
+def get_email_id(faker, used_emails):
+    email_id = faker.email()
+    while email_id in used_emails:
+        email_id = faker.email()
+    used_emails.add(email_id)
+    return email_id
 
 def create_attendant_data(faker: Faker()):
     header = [
@@ -190,10 +197,10 @@ def create_attendant_data(faker: Faker()):
             entries = [
                 get_user_name(faker, all_used_names),
                 faker.name(),
-                faker.email(),
+                get_email_id(faker, all_used_emails),
                 faker.phone_number(),
                 faker.address(),
-                faker.password(),
+                '$2a$10$SMKd3kCGXhq3z6G.Y0Njp.cTlCGoxUPGP0gjaFuShow9Gj9A5Y9cO',
                 "attendant",
                 rng.choice(np.arange(20000, 30000)),
                 False,
@@ -222,10 +229,10 @@ def create_chef_data(faker: Faker()):
             entries = [
                 get_user_name(faker, all_used_names),
                 faker.name(),
-                faker.email(),
+                get_email_id(faker, all_used_emails),
                 faker.phone_number(),
                 faker.address(),
-                faker.password(),
+                '$2a$10$SMKd3kCGXhq3z6G.Y0Njp.cTlCGoxUPGP0gjaFuShow9Gj9A5Y9cO',
                 "chef",
                 rng.choice(np.arange(30000, 80000)),
                 False,
@@ -254,10 +261,10 @@ def create_manager_data(faker: Faker()):
             entries = [
                 get_user_name(faker, all_used_names),
                 faker.name(),
-                faker.email(),
+                get_email_id(faker, all_used_emails),
                 faker.phone_number(),
                 faker.address(),
-                faker.password(),
+                '$2a$10$SMKd3kCGXhq3z6G.Y0Njp.cTlCGoxUPGP0gjaFuShow9Gj9A5Y9cO',
                 "manager",
                 rng.choice(np.arange(30000, 80000)),
                 False,
@@ -282,10 +289,10 @@ def create_customer_data(faker: Faker()):
             entries = [
                 get_user_name(faker, all_used_names),
                 faker.name(),
-                faker.email(),
+                get_email_id(faker, all_used_emails),
                 faker.phone_number(),
                 faker.address(),
-                faker.password(),
+                '$2a$10$SMKd3kCGXhq3z6G.Y0Njp.cTlCGoxUPGP0gjaFuShow9Gj9A5Y9cO',
             ]
             writer.writerow(entries)
 

@@ -44,7 +44,7 @@
 - // need to check if the email is already present;
   // need to check if the username is already used; in manager controller.insert. Either should do it in direct schema now.. or should do it backend using other services... Look into this.
 
-- basic Menu done. Sorts based on dish_price DESC. Maybe we can add few other menus based on sorting etc etc. But time.. not there
+- ~~basic Menu done. Sorts based on dish_price DESC. Maybe we can add few other menus based on sorting etc etc. But time.. not there~~
 
 - Need to add role checks everywhere. RightNow not added at any place. Especially in billOnline function.
 
@@ -57,3 +57,4 @@
 - ~~Added fireEmployee. But need to take care such that a fired employee is not displayed, not allowed to login, not allowed to be an attendant etc.~~
 
 - the timestamp for getFreeTables should be the same form as stored in the database. No timezone etc.
+- ~~for creating data we used un hashed passwords should change (use same password for starting data 1234 hashed )~~
