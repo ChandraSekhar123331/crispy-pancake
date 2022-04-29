@@ -39,10 +39,10 @@
 
 - Should we also have an endpoint that takes in a list of ingredients for **one-dish** and add all together?. Right now we can only add one (dish_id, stock_id, quantity) in one go.
 
-- delete and update on ingredients is also not done.
+- ~~delete and update on ingredients is also not done~~. // not doing
 
-- // need to check if the email is already present;
-  // need to check if the username is already used; in manager controller.insert. Either should do it in direct schema now.. or should do it backend using other services... Look into this.
+-~~ need to check if the email is already present;~~
+~~need to check if the username is already used; in manager controller.insert. Either should do it in direct schema now.. or should do it backend using other ~~~services... Look into this~~ .
 
 - ~~basic Menu done. Sorts based on dish_price DESC. Maybe we can add few other menus based on sorting etc etc. But time.. not there~~
 
@@ -58,3 +58,7 @@
 
 - the timestamp for getFreeTables should be the same form as stored in the database. No timezone etc.
 - ~~for creating data we used un hashed passwords should change (use same password for starting data 1234 hashed )~~
+
+- employee register page should not visible to unlogged user/customer. only employee login should be visible to them. employee register should only visible to logged in manager.
+
+- Need not create session on register. Redirect him to login page. We Can just create session when a user logs in.

@@ -52,18 +52,25 @@ const insert = function insert(req, res) {
     .insert(userName, fullName, emailId, phoneNumber, address, hashedPassword)
     .then((response) => {
       const user = response.result.rows[0];
-      req.session.user = {
-        id: user.customer_id,
-        userName: user.user_name,
-        fullName: user.full_name,
-        emailId: user.email_id,
-        address: user.cust_address,
-        role: 'customer',
-      };
+      // req.session.user = {
+      //   id: user.customer_id,
+      //   userName: user.user_name,
+      //   fullName: user.full_name,
+      //   emailId: user.email_id,
+      //   address: user.cust_address,
+      //   role: 'customer',
+      // };
       return res.status(200).json({
         message: 'Success',
         code: 0,
-        result: req.session.user,
+        result: {
+          id: user.customer_id,
+          userName: user.user_name,
+          fullName: user.full_name,
+          emailId: user.email_id,
+          address: user.cust_address,
+          role: 'customer',
+        },
       });
     })
     .catch((error) =>

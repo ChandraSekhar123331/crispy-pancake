@@ -95,22 +95,21 @@ const insert = function insert(req, res) {
       const empId = emp.emp_id;
       attendCrudService
         .insert(empId, attendantRole)
-        .then(() => {
-          req.session.user = {
-            id: emp.emp_id,
-            userName: emp.user_name,
-            fullName: emp.emp_name,
-            emailId: emp.email_id,
-            address: emp.emp_address,
-            role: emp.emp_role,
-            attendantRole,
-          };
-          return res.status(200).json({
+        .then(() =>
+          res.status(200).json({
             message: 'Success',
             code: 0,
-            result: req.session.user,
-          });
-        })
+            result: {
+              id: emp.emp_id,
+              userName: emp.user_name,
+              fullName: emp.emp_name,
+              emailId: emp.email_id,
+              address: emp.emp_address,
+              role: emp.emp_role,
+              attendantRole,
+            },
+          }),
+        )
         .catch((error) =>
           res.status(409).json({
             message: error.message,
