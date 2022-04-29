@@ -23,6 +23,13 @@ const insert = function insert(req, res) {
       result: null,
     });
   }
+  if (quantity <= 0) {
+    return res.status(409).json({
+      message: 'quantity should be positive',
+      code: -1,
+      result: null,
+    });
+  }
 
   return ingredCrudService
     .insert(dishId, stockId, quantity)

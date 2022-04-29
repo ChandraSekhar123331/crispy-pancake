@@ -79,7 +79,8 @@ CREATE TABLE Stock (
   quantity_left int,
   min_required int,
   price_per_unit int,
-  PRIMARY KEY (stock_id)
+  PRIMARY KEY (stock_id),
+  UNIQUE(stock_name)
 );
 
 CREATE TABLE Dish (
@@ -89,7 +90,8 @@ CREATE TABLE Dish (
   cuisine varchar,
   item_type varchar,
   profit_percentage int,
-  PRIMARY KEY (dish_id)
+  PRIMARY KEY (dish_id),
+  UNIQUE(dish_name)
 );
 
 CREATE TABLE Ordered_items (
