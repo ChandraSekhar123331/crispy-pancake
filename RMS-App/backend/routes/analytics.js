@@ -1,5 +1,5 @@
 const express = require('express');
-const analyticsDishController = require('../controllers/analytics/dishes');
+const analyticsDishController = require('../controllers/analytics/dish');
 
 const router = express.Router();
 router.get('/top-dishes-byRevenue', analyticsDishController.topDishByRevenue);
