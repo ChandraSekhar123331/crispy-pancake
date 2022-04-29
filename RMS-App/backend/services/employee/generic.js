@@ -4,7 +4,8 @@ const getUser = function getUser(emailId) {
   const query = `select emp_id, user_name, emp_name, email_id,
   emp_address, emp_password, emp_role
   from employee
-  where email_id = $1`;
+  where email_id = $1 
+  and fired=false`;
 
   return poolObj
     .query(query, [emailId])
@@ -21,7 +22,8 @@ const getUser = function getUser(emailId) {
 const getOneInfo = function getOneInfo(employeeId) {
   const query = `select user_name, emp_name, email_id, emp_address
   from employee
-  where emp_id = $1`;
+  where emp_id = $1
+  and fired=false`;
   return poolObj
     .query(query, [employeeId])
     .then((response) =>
@@ -37,6 +39,7 @@ const getOneInfo = function getOneInfo(employeeId) {
 const getAllInfo = function getAllInfo(skip, lim) {
   const query = `select user_name, emp_name, email_id, emp_address
   from employee
+  where  fired=false
   limit $1
   offset $2`;
   return poolObj

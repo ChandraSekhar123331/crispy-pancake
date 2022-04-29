@@ -2,11 +2,13 @@ const { poolObj } = require('../../connectDb');
 
 const getFreeOnlineAttendant = function getFreeOnlineAttendant() {
   const query = `select attendant_id 
-  from attendant
+  from attendant, employee
   where attendant_id not in (
     select attendant_id from attended_by
     where delivered = false
-  ) and attendant_role = 'online'
+  ) and attendant_role = 'online' 
+  and attendant.attendant_id = employee.emp_id
+  and fired = false
   order by Random()
   limit 1;`;
   return poolObj
@@ -40,11 +42,13 @@ const assignAttendant = function assignAttendant(billId, attendantId) {
 
 const getFreeOfflineAttendant = function getFreeOfflineAttendant() {
   const query = `select attendant_id 
-  from attendant
+  from attendant,employee
   where attendant_id not in (
     select attendant_id from attended_by
     where delivered = false
-  ) and attendant_role = 'hotel'
+  ) and attendant_role = 'hotel' 
+  and attendant_id=emp_id 
+  and fired=false
   order by Random()
   limit 1;`;
   return poolObj
