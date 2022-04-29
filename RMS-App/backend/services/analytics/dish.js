@@ -2,7 +2,7 @@ const { poolObj } = require('../connectDb');
 
 const topDishByRevenue = function topDishByRevenue(numTop) {
   const query = `with temp(dish_id, revenue) as (
-    select dish_id, sum(quantity * price_per_unit)/1000000 revenue
+    select dish_id, sum(quantity * price_per_unit)/1000000 as revenue
     from ordered_items
     group by(dish_id)
 )
@@ -26,7 +26,7 @@ limit $1;`;
 
 const topDishBySales = function topDishBySales(numTop) {
   const query = `with temp(dish_id, sales) as (
-    select dish_id, sum(quantity)*1.0/1000 sales
+    select dish_id, sum(quantity)*1.0/1000 as sales
     from ordered_items
     group by(dish_id)
 )
@@ -50,7 +50,7 @@ limit $1;`;
 
 const worstDishByRevenue = function worstDishByRevenue(numTop) {
   const query = `with temp(dish_id, revenue) as (
-        select dish_id, sum(quantity * price_per_unit)/1000000 revenue
+        select dish_id, sum(quantity * price_per_unit)/1000000 as revenue
         from ordered_items
         group by(dish_id)
     )
@@ -74,7 +74,7 @@ const worstDishByRevenue = function worstDishByRevenue(numTop) {
 
 const worstDishBySales = function worstDishBySales(numTop) {
   const query = `with temp(dish_id, sales) as (
-        select dish_id, sum(quantity)*1.0/1000 sales
+        select dish_id, sum(quantity)*1.0/1000 as sales
         from ordered_items
         group by(dish_id)
     )

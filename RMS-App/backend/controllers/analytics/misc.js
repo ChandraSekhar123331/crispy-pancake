@@ -1,4 +1,4 @@
-const miscDishService = require('../../services/analytics/dish');
+const miscDishService = require('../../services/analytics/misc');
 
 const topItemsByType = function topItemsByType(req, res) {
   const numTop = 3;
@@ -27,7 +27,7 @@ const bestWeekDayByOrders = function bestWeekDayByOrders(req, res) {
       res.status(200).json({
         message: 'Success',
         code: 0,
-        result: response.result.rows,
+        result: response.result.rows[0],
       }),
     )
     .catch((error) =>

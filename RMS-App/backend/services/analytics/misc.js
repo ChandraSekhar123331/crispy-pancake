@@ -34,7 +34,7 @@ const bestWeekDayByOrders = function bestWeekDayByOrders() {
   const query = `select day_of_week, count(*) as num_orders
   from (select to_char(bill_time, 'dy') as day_of_week from bill) as temp
   group by day_of_week
-  ORDER BY num_orders ASC
+  ORDER BY num_orders DESC
   LIMIT 1;`;
 
   return poolObj
@@ -52,13 +52,12 @@ const bestWeekDayByOrders = function bestWeekDayByOrders() {
 const monthlySales = function monthlySales() {
   const query = `with bill_details(bill_id, net_bill, year, month_txt, month_num) as (
     select bill.bill_id as bill_id,
-    SUM(menu.dish_price * ordered_items.quantity) as net_bill, 
+    SUM(price_per_unit * ordered_items.quantity) as net_bill, 
     extract(year from bill.bill_time) as year,
     to_char(bill.bill_time, 'month') as month_txt,
     extract(month from bill.bill_time) as month_num
-    from ordered_items, menu, bill
-    where ordered_items.dish_id = menu.dish_id
-    and ordered_items.bill_id = bill.bill_id
+    from ordered_items, bill
+    where ordered_items.bill_id = bill.bill_id
     group by bill.bill_id
   )
   select year, month_txt, sum(net_bill) as total_sales
