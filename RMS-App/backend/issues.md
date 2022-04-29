@@ -55,3 +55,5 @@
 - Make sure that the delivered column in attended_by is never null. Otherwise we will have issues.
 
 - Added fireEmployee. But need to take care such that a fired employee is not displayed, not allowed to login, not allowed to be an attendant etc.
+
+- the timestamp for getFreeTables should be the same form as stored in the database. No timezone etc.

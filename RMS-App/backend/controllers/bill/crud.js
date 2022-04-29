@@ -4,7 +4,8 @@ const orderItemService = require('../../services/bill/orderItem');
 
 const insertOnlineBill = function insertOnlineBill(req, res) {
   const customerId = req.session.user.id;
-  const { role, itemList } = req.session.user;
+  const { role } = req.session.user;
+  const { itemList } = req.body;
   if (customerId == null) {
     return res.status(403).json({
       message: 'customerId not defined. Unauthorised access.',
@@ -99,6 +100,10 @@ const insertOnlineBill = function insertOnlineBill(req, res) {
       }),
     );
 };
+
+// const createBill = function createBill(req, res) {
+//   const {customerId, orderType, }
+// };
 // const getAllInfo = function getAllInfo(req, res) {
 //   const { skip, lim } = req.query;
 //   if (skip == null || lim == null) {
