@@ -15,7 +15,25 @@ const insert = function insert(customerId, orderType) {
     )
     .catch((error) => Promise.reject(new Error(error.message)));
 };
+const markDelivered = function markDelivered(billId) {
+  const query = `
+  update attended_by
+  set delivered=true 
+  where bill_id=$1
+  returning *
+   `;
 
+  return poolObj
+    .query(query, [billId])
+    .then((response) =>
+      Promise.resolve({
+        message: 'Success',
+        code: 0,
+        result: response,
+      }),
+    )
+    .catch((error) => Promise.reject(new Error(error.message)));
+};
 // const getOneInfo = function getOneInfo() {
 //   const query = ``;
 
@@ -47,5 +65,6 @@ const insert = function insert(customerId, orderType) {
 // };
 
 exports.insert = insert;
+exports.markDelivered = markDelivered;
 // exports.getOneInfo = getOneInfo;
 // exports.getAllInfo = getAllInfo;

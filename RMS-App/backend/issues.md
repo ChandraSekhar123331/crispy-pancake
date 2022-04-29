@@ -52,8 +52,8 @@
 
 - There will be issues with dishes with no ingredients. Just restrict it somehow. Otherwise its a headache with queries.
 
-- Make sure that the delivered column in attended_by is never null. Otherwise we will have issues.
+- ~~Make sure that the delivered column in attended_by is never null. Otherwise we will have issues.~~
 
-- Added fireEmployee. But need to take care such that a fired employee is not displayed, not allowed to login, not allowed to be an attendant etc.
+- ~~Added fireEmployee. But need to take care such that a fired employee is not displayed, not allowed to login, not allowed to be an attendant etc.~~
 
 - the timestamp for getFreeTables should be the same form as stored in the database. No timezone etc.

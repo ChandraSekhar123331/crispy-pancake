@@ -180,6 +180,40 @@ const assignWaiter = function assignWaiter(req, res) {
       }),
     );
 };
+
+const updateDeliveredStatus = function updateDeliveredStatus(req, res) {
+  const { billId } = req.query;
+  if (billId == null) {
+    return res.status(409).json({
+      message: "billId can't be null",
+      code: -1,
+      result: null,
+    });
+  }
+  return billCrudService
+    .markDelivered(billId)
+    .then((response) => {
+      if (response.result.rowCount === 0) {
+        return res.status(409).json({
+          message: 'billId not present in the table',
+          code: -1,
+          result: null,
+        });
+      }
+      return res.status(200).json({
+        message: 'Success',
+        code: 0,
+        result: response.result.rows[0],
+      });
+    })
+    .catch((error) =>
+      res.status(409).json({
+        message: error.message,
+        code: -1,
+        result: null,
+      }),
+    );
+};
 // const
 // const createBill = function createBill(req, res) {
 //   const {customerId, orderType, }
@@ -261,6 +295,7 @@ const assignWaiter = function assignWaiter(req, res) {
 exports.insertOnlineBill = insertOnlineBill;
 exports.addItemList = addItemList;
 exports.assignWaiter = assignWaiter;
+exports.updateDeliveredStatus = updateDeliveredStatus;
 // exports.insertOfflineBill = insertOfflineBill;
 // exports.getAllInfo = getAllInfo;
 // exports.getOneInfo = getOneInfo;
