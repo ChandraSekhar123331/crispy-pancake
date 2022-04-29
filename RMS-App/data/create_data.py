@@ -180,6 +180,7 @@ def create_attendant_data(faker: Faker()):
         "emp_password",
         "emp_role",
         "salary",
+        "fired",
         "attendant_role",
     ]
     with open("data_folder/attendant.csv", "w", newline="") as file:
@@ -195,6 +196,7 @@ def create_attendant_data(faker: Faker()):
                 faker.password(),
                 "attendant",
                 rng.choice(np.arange(20000, 30000)),
+                False,
                 attendant_roles[rng.choice(np.arange(len(attendant_roles)))],
             ]
             writer.writerow(entries)
@@ -210,6 +212,7 @@ def create_chef_data(faker: Faker()):
         "emp_password",
         "emp_role",
         "salary",
+        "fired",
         "specialization",
     ]
     with open("data_folder/chef.csv", "w", newline="") as file:
@@ -225,6 +228,7 @@ def create_chef_data(faker: Faker()):
                 faker.password(),
                 "chef",
                 rng.choice(np.arange(30000, 80000)),
+                False,
                 cuisines[rng.choice(np.arange(len(cuisines)))],
             ]
             writer.writerow(entries)
@@ -240,6 +244,7 @@ def create_manager_data(faker: Faker()):
         "emp_password",
         "emp_role",
         "salary",
+        "fired",
         "skill",
     ]
     with open("data_folder/manager.csv", "w", newline="") as file:
@@ -255,6 +260,7 @@ def create_manager_data(faker: Faker()):
                 faker.password(),
                 "manager",
                 rng.choice(np.arange(30000, 80000)),
+                False,
                 manager_roles[rng.choice(np.arange(len(manager_roles)))],
             ]
             writer.writerow(entries)

@@ -87,6 +87,22 @@ const insertEmployee = function insertEmployee(
     .catch((error) => Promise.reject(new Error(error.message)));
 };
 
+const fireEmployee = function fireEmployee(employeeId) {
+  const query = `update employee
+  set fired = true
+  where emp_id = $1 and fired = false`;
+  return poolObj
+    .query(query, [employeeId])
+    .then((response) =>
+      Promise.resolve({
+        message: 'Success',
+        code: 0,
+        result: response,
+      }),
+    )
+    .catch((error) => Promise.reject(new Error(error.message)));
+};
+
 const update = function update() {};
 
 exports.insert = insertEmployee;
@@ -95,3 +111,4 @@ exports.getUser = getUser;
 exports.getOneInfo = getOneInfo;
 exports.getAllInfo = getAllInfo;
 exports.update = update;
+exports.fireEmployee = fireEmployee;

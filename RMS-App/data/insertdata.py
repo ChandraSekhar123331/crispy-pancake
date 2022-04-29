@@ -88,6 +88,7 @@ if __name__ == "__main__":
         {"col_name": "emp_password", "type_func": str},
         {"col_name": "emp_role", "type_func": str},
         {"col_name": "salary", "type_func": int},
+        {"col_name": "fired", "type_func": bool},
     ]
 
     bill_cols = [

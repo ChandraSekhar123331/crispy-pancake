@@ -140,6 +140,39 @@ const getAllInfo = function getAllInfo(req, res) {
     );
 };
 
+const fireEmployee = function fireEmployee(req, res) {
+  const { empId } = req.query;
+  if (empId == null) {
+    return res.status(409).json({
+      message: "empId can't be null",
+      code: -1,
+      result: null,
+    });
+  }
+  return empGenericService
+    .fireEmployee(empId)
+    .then((response) => {
+      if (response.result.rowCount === 0) {
+        return res.status(409).json({
+          message: 'empId not found in the Database or is already fired.',
+          code: -1,
+          result: null,
+        });
+      }
+      return res.status(200).json({
+        message: 'Success',
+        code: 0,
+        result: response.result.rows[0],
+      });
+    })
+    .catch((error) =>
+      res.status(409).json({
+        message: error.message,
+        code: -1,
+        result: null,
+      }),
+    );
+};
 const update = function update(req, res) {};
 // For delete to work in a role independent way, we
 // need to do cascade on foreign key references..
@@ -154,3 +187,4 @@ exports.update = update;
 // exports.dlete = dlete;
 exports.getOneInfo = getOneInfo;
 exports.getAllInfo = getAllInfo;
+exports.fireEmployee = fireEmployee;

@@ -35,6 +35,7 @@ CREATE TABLE Employee (
   emp_password varchar,
   emp_role varchar,
   salary bigint,
+  fired boolean,
   PRIMARY KEY(emp_id),
   UNIQUE (user_name)
 );
