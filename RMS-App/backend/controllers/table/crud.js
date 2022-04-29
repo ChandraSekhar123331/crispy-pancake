@@ -45,6 +45,13 @@ const insert = function insert(req, res) {
 const update = function update(req, res) {
   const { tableId, occupancy, position } = req.query;
 
+  if (tableId == null) {
+    return res.status(409).json({
+      message: "tableId can't be null",
+      code: -1,
+      result: null,
+    });
+  }
   if (occupancy == null) {
     return res.status(409).json({
       message: "occupancy can't be null",

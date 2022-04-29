@@ -3,8 +3,13 @@ const { poolObj } = require('../connectDb');
 const getFreeTables = function getFreeTables(startTime) {
   const query = `select distinct(table_id)
   from table_booking
-  where end_time < $1
-  or start_time < $1 + (45 * interval '1 minute')`;
+  where table_id not in (
+    select table_id
+    from table_booking
+    where (start_time <= $1 and end_time >= $1) or 
+    (start_time <= ($1 + (45 * interval '1 minute')) and end_time >= ($1 + (45 * interval '1 minute')))
+  )
+  ORDER BY table_id ASC`;
 
   return poolObj
     .query(query, [startTime])
