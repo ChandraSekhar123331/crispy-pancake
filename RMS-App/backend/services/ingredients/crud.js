@@ -22,7 +22,7 @@ const getOneInfo = function getOneInfo(dishId) {
   from (
     select *
     from dish
-    where dish.dish_id = 1
+    where dish.dish_id = $1
   ) as D left outer join ingredients as ingred using (dish_id), stock
   where D.dish_id = ingred.dish_id
   and ingred.stock_id = stock.stock_id
