@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9_]+$')]),
+    username: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9_]{3,}$')]),
     password: new FormControl('', [Validators.required, Validators.minLength(4)])
   });
 

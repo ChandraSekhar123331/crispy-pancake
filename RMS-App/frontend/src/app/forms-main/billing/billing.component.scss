@@ -18,10 +18,11 @@ button {
         width: 30vw;
     }
 
-    & > div:last-of-type {
+    & > div:nth-of-type(2) {
         .card {
             overflow-y: auto;
             width: 50vw;
+            grid-column: span 2;
 
             .table-container {
                 margin-top: 20px;

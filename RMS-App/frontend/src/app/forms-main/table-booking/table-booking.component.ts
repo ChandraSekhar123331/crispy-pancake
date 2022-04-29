@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { increment, decrement } from '../../utility-functions';
 
 @Component({
   selector: 'app-table-booking',
@@ -9,6 +10,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class TableBookingComponent implements OnInit {
 
   constructor() { }
+
+  increment = increment;
+  decrement = decrement;
 
   bookingForm = new FormGroup({
     datetime: new FormControl('', [Validators.required, this.validateDateTime]),
@@ -33,19 +37,5 @@ export class TableBookingComponent implements OnInit {
   }
 
   onSubmit() { }
-
-  increment(property: string, max: number) {
-    const value = this.bookingForm.get(property)!.value;
-    if (value < max) {
-      this.bookingForm.get(property)!.setValue(value + 1);
-    }
-  }
-
-  decrement(property: string, min: number) {
-    const value = this.bookingForm.get(property)!.value;
-    if (value > min) {
-      this.bookingForm.get(property)!.setValue(value - 1);
-    }
-  }
 
 }

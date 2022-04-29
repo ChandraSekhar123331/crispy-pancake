@@ -1,2 +1,4 @@
 RMS-APP/.env
 .vscode/
+node_modules/
+.angular
