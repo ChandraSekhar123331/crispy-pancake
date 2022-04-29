@@ -101,6 +101,86 @@ const insertOnlineBill = function insertOnlineBill(req, res) {
     );
 };
 
+const addItemList = function addItemList(req, res) {
+  const { billId, itemList } = req.body;
+  if (itemList == null) {
+    return res.status(403).json({
+      message: "itemList can't be null for an order",
+      code: -1,
+      result: null,
+    });
+  }
+  if (itemList.length === 0) {
+    return res.status(403).json({
+      message: "itemList can't be null for an order",
+      code: -1,
+      result: null,
+    });
+  }
+  if (billId == null) {
+    return res.status(403).json({
+      message: "billId can't be null",
+      code: -1,
+      result: null,
+    });
+  }
+  for (let i = 0; i < itemList.length; i += 1) {
+    orderItemService
+      .insert(billId, itemList[i].dishId, itemList[i].quantity)
+      .catch((error) =>
+        res.status(409).json({
+          message: error.message,
+          code: -1,
+          result: null,
+        }),
+      );
+  }
+  return res.status(200).json({
+    message: 'Success',
+    code: 0,
+    result: null,
+  });
+};
+
+const assignWaiter = function assignWaiter(req, res) {
+  const { billId } = req.body;
+  return freeAttendService
+    .getFreeOfflineAttendant()
+    .then((attendantResponse) => {
+      if (attendantResponse.result.rowCount === 0) {
+        return res.status(403).json({
+          message: 'No attendant free. Please reorder later.',
+          code: -1,
+          result: null,
+        });
+      }
+      const attendantId = attendantResponse.result.rows[0].attendant_id;
+      return freeAttendService
+        .assignAttendant(billId, attendantId)
+        .then((response) =>
+          res.status(200).json({
+            message: 'Success',
+            code: 0,
+            result: response.result.rows,
+          }),
+        )
+        .catch((error) =>
+          res.status(409).json({
+            message: error.message,
+            code: -1,
+            result: null,
+          }),
+        );
+    })
+    .catch((error) =>
+      res.status(409).json({
+        message: error.message,
+        code: -1,
+        result: null,
+      }),
+    );
+};
+// const
 // const createBill = function createBill(req, res) {
 //   const {customerId, orderType, }
 // };
@@ -179,6 +259,8 @@ const insertOnlineBill = function insertOnlineBill(req, res) {
 // };
 
 exports.insertOnlineBill = insertOnlineBill;
+exports.addItemList = addItemList;
+exports.assignWaiter = assignWaiter;
 // exports.insertOfflineBill = insertOfflineBill;
 // exports.getAllInfo = getAllInfo;
 // exports.getOneInfo = getOneInfo;

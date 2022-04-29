@@ -38,5 +38,26 @@ const assignAttendant = function assignAttendant(billId, attendantId) {
     .catch((error) => Promise.reject(new Error(error.message)));
 };
 
+const getFreeOfflineAttendant = function getFreeOfflineAttendant() {
+  const query = `select attendant_id 
+  from attendant
+  where attendant_id not in (
+    select attendant_id from attended_by
+    where delivered = false
+  ) and attendant_role = 'hotel'
+  order by Random()
+  limit 1;`;
+  return poolObj
+    .query(query, [])
+    .then((response) =>
+      Promise.resolve({
+        message: 'Success',
+        code: 0,
+        result: response,
+      }),
+    )
+    .catch((error) => Promise.reject(new Error(error.message)));
+};
 exports.getFreeOnlineAttendant = getFreeOnlineAttendant;
 exports.assignAttendant = assignAttendant;
+exports.getFreeOfflineAttendant = getFreeOfflineAttendant;
