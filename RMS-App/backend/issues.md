@@ -62,3 +62,5 @@
 - employee register page should not visible to unlogged user/customer. only employee login should be visible to them. employee register should only visible to logged in manager.
 
 - Need not create session on register. Redirect him to login page. We Can just create session when a user logs in.
+
+- // assuming that the tableList that reaches bookTable in controllers/table/table.js is a valid non clashing one.
