@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { increment, decrement } from 'src/app/utility-functions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-billing',
@@ -9,7 +9,12 @@ import { increment, decrement } from 'src/app/utility-functions';
 })
 export class BillingComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
+
+  bill_id = this.router.url.split('/')[2];
+  customer_name?: string; // TODO
 
   order: Map<number, [string, number, number]> = new Map();
   currentOrderForm = new FormGroup({

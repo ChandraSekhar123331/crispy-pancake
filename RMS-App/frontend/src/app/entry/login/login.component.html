@@ -7,9 +7,9 @@
         </div>
         <div class="card-body">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <div class="form-group" [class.valid]="loginForm.controls['username'].valid">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" formControlName="username" />
+                <div class="form-group" [class.valid]="loginForm.controls['emailId'].valid">
+                    <label for="emailId">Email ID</label>
+                    <input type="email" id="emailId" formControlName="emailId" />
                 </div>
                 <div class="form-group" [class.valid]="loginForm.controls['password'].valid">
                     <label for="password">Password</label>
@@ -18,8 +18,8 @@
                     <input [type]="showPassword ? 'text' : 'password'" id="password"
                         formControlName="password" spellcheck="false" />
                 </div>
-                <button type="submit" [disabled]="!loginForm.valid || formStatus != 0">
-                    {{formStatus == 0 ? "Sign in" : "Signing in..."}}
+                <button type="submit" [disabled]="!loginForm.valid || formStatus !== 0" [class.negative]="formStatus === 3" [class.selected]="formStatus === 2">
+                    {{formStatus === 0 ? "Sign in" : formStatus === 1 ? "Signing in..." : formStatus === 3 ? "Sign in failed" : "Signed in!"}}
                 </button>
             </form>
         </div>

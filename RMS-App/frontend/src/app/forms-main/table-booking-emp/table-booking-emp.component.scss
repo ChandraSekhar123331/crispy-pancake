@@ -10,7 +10,7 @@ form, .grid {
 
 .fg-grid {
     display: grid;
-    grid-template-columns: auto auto auto calc(20px + 7em);
+    grid-template-columns: auto auto calc(20px + 7em);
     grid-gap: 15px;
 }
 

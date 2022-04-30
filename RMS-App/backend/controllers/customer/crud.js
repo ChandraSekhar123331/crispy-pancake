@@ -2,8 +2,9 @@ const bcrypt = require('bcryptjs');
 const customerCrudService = require('../../services/customer/crud');
 
 const insert = function insert(req, res) {
-  const { userName, fullName, emailId, phoneNumber, address, password } =
-    req.query;
+  console.log(req.body);
+  const { userName, fullName, emailId, phoneNumber, address, password, terms } =
+    req.body;
 
   if (userName == null) {
     return res.status(409).json({

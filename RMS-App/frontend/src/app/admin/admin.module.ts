@@ -5,11 +5,13 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EmployeeRegistrationComponent } from './employee-registration/employee-registration.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    EmployeeRegistrationComponent
+    EmployeeRegistrationComponent,
+    AnalyticsComponent
   ],
   imports: [
     CommonModule,

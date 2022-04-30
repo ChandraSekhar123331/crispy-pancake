@@ -15,6 +15,7 @@ body {
     padding: 0;
     background: var(--body-background);
     background-size: cover;
+    overflow-x: hidden;
 }
 
 * {
@@ -42,18 +43,22 @@ a {
 }
 
 .full-page {
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
+    padding: 50px;
 }
 
 .mid-center {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    text-align: center;
+
+    &>* {
+        text-align: left;
+    }
 }
 
 .card {
+    margin: 0 auto;
     width: 40vw;
     backdrop-filter: blur(10px);
     padding: 40px 60px;
@@ -98,7 +103,8 @@ a {
     input[type="password"],
     input[type="email"],
     input[type="datetime-local"],
-    input[type="number"] {
+    input[type="number"],
+    textarea {
         padding: 10px;
         text-align: center;
         width: 100%;
@@ -161,7 +167,8 @@ a {
 button,
 .table-container,
 .input,
-input {
+input,
+textarea {
     box-shadow: var(--nm-shadow);
 }
 
@@ -193,6 +200,16 @@ button {
         font-weight: normal;
         background: var(--body-background);
         color: var(--color-primary);
+    }
+
+    &.selected {
+        background: var(--color-affirmative);
+        color: var(--body-background);
+    }
+
+    &.negative {
+        background: var(--color-negative);
+        color: var(--body-background);
     }
 }
 
@@ -228,6 +245,7 @@ button {
 
     &.disabled {
         color: transparent;
+        cursor: not-allowed;
     }
 }
 
@@ -318,4 +336,15 @@ table {
 ::-webkit-scrollbar-thumb {
     background: var(--color-primary);
     border-radius: 3px;
+}
+
+.btn-grid {
+    padding: 15px 10px 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+    
+    button {
+        margin: 0 !important;
+    }
 }

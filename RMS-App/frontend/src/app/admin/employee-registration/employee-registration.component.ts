@@ -20,7 +20,7 @@ export class EmployeeRegistrationComponent implements OnInit {
     role: new FormControl('', [Validators.required])
   });
 
-  roles = ['chef', 'waiter', 'deliverer', 'cashier'];
+  roles = ['chef', 'waiter', 'deliverer', 'cashier', 'manager'];
 
   showPassword = false;
   formStatus = 0;

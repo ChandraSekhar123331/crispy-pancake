@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const customerLoginService = require('../../services/customer/login');
 
 const loginUser = function loginUser(req, res) {
-  const { emailId, password } = req.query;
+  const { emailId, password } = req.body;
   if (emailId == null) {
     return res.status(409).json({
       message: "emailId can't be null",

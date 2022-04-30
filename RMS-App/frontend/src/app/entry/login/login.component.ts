@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9_]{3,}$')]),
+    emailId: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(4)])
   });
 
@@ -34,11 +34,15 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.formStatus = 1;
 
-    this.api.login(this.loginForm.value).subscribe({
+    this.api.login(this.loginForm.value, ['customer', 'employee'][this.signingInAs]).subscribe({
+      next: (response) => {
+        localStorage.setItem('user', JSON.stringify(response.result));
+        this.formStatus = 2;
+      },
       error: (err) => {
         console.error(err);
         this.formStatus = 3;
-        this.loginForm.reset();
+        setTimeout(() => { this.formStatus = 0; }, 2000);
       }
     });
   }
