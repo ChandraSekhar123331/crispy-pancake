@@ -16,7 +16,9 @@
         "function-paren-newline":"off",
         "no-console":"off",
         "operator-linebreak": ["error", "after"],
-        "object-curly-newline": ["error", {"multiline": true}]
+        "object-curly-newline": ["error", {"multiline": true}],
+        "linebreak-style": "off"
+
 
     }
 }
