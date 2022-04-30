@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const customerCrudService = require('../../services/customer/crud');
 
 const insert = function insert(req, res) {
-  console.log(req.body);
   const { userName, fullName, emailId, phoneNumber, address, password, terms } =
     req.body;
 

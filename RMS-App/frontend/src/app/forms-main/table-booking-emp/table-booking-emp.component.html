@@ -36,7 +36,7 @@
         <h2>
             Assign Table
         </h2>
-        <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="bookingForm">
             <div class="fg-grid">
                 <div class="form-group">
                     <label for="floor">Floor</label>
@@ -58,15 +58,16 @@
                             (click)="increment(bookingForm, 'size', 10)">&#10148;</span>
                     </div>
                 </div>
-                <div><button [disabled]="bookingForm.invalid">Update</button></div>
+                <div><button [disabled]="bookingForm.invalid" (click)="onUpdate()"
+                        [disabled]="checkStatus != 0">{{checkStatus == 0 ? "Update" : "Updating..."}}</button></div>
             </div>
         </form>
         <div class="grid">
             <div class="seat-sel" *ngFor="let table of tables">
-                <button [disabled]="table[1]" [class.secondary]="table[1]" (click)="assignedTable = table[0]"
-                    [class.selected]="table[0] === assignedTable">•</button>
+                <button [class.secondary]="table.table_id !== assignedTable" (click)="assignedTable = table.table_id"
+                    [class.selected]="table.table_id === assignedTable">•</button>
             </div>
         </div>
-        <button [disabled]="assignedTable === undefined">Continue</button>
+        <button [disabled]="assignedTable === undefined" (click)="onSubmit()">Continue</button>
     </div>
 </div>

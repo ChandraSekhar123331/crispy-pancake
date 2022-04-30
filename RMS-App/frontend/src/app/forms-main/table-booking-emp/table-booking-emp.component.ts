@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { increment, decrement } from '../../utility-functions';
 
+import { ApiService } from '../api.service';
+
 @Component({
   selector: 'app-table-booking-emp',
   templateUrl: './table-booking-emp.component.html',
@@ -9,7 +11,9 @@ import { increment, decrement } from '../../utility-functions';
 })
 export class TableBookingEmpComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private api: ApiService
+  ) { }
 
   increment = increment;
   decrement = decrement;
@@ -25,7 +29,7 @@ export class TableBookingEmpComponent implements OnInit {
     name: new FormControl('', [Validators.required])
   });
 
-  userId?: number;
+  user = this.api.getUserInfo();
   name?: string;
   identified = false;
 
@@ -36,7 +40,7 @@ export class TableBookingEmpComponent implements OnInit {
   formStatus = 0;
 
   counter = new Array(10);
-  tables: [number, boolean][] = [[12, false], [11, true], [34, false], [56, true], [78, false], [90, true], [32, false], [17, true], [91, false], [44, true]];
+  tables?: [{ table_id: number }];
   assignedTable?: number;
 
   ngOnInit(): void {
@@ -44,7 +48,7 @@ export class TableBookingEmpComponent implements OnInit {
 
   async onCheck() {
     if (this.registered) {
-      this.userId = 2378;
+      // this.userId = 2378;
       this.name = "John Doe";
     } else {
       this.name = this.customerInfoForm.value.name;
@@ -52,6 +56,33 @@ export class TableBookingEmpComponent implements OnInit {
     this.identified = true;
   }
 
-  onSubmit() { }
+  onUpdate() {
+    this.checkStatus = 1;
+    this.api.getVacantTables(this.bookingForm.value).subscribe({
+      next: (response) => {
+        this.tables = response.result;
+        this.checkStatus = 0;
+        this.assignedTable = undefined;
+      },
+      error: () => {
+        // TODO
+      }
+    });
+  }
+
+  onSubmit() {
+    console.log(this.customerInfoForm.value);
+    this.formStatus = 1;
+    this.api.bookTable({
+      customerId: this.user.id,
+      tableList: this.assignedTable!,
+      startTime: new Date().toISOString(),
+    }).subscribe({
+      next: (response) => {
+        this.formStatus = 0;
+        console.log(response);
+      }
+    });
+  }
 
 }

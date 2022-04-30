@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { EntryModule } from './entry/entry.module';
 import { AdminModule } from './admin/admin.module';
 import { FormsMainModule } from './forms-main/forms-main.module';
+import { ViewsMainModule } from './views-main/views-main.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     EntryModule,
     FormsMainModule,
+    ViewsMainModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'admin', loadChildren: () => AdminModule },

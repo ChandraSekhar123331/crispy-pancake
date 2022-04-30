@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { increment, decrement } from '../../utility-functions';
 import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-booking',
@@ -11,7 +12,8 @@ import { ApiService } from '../api.service';
 export class TableBookingComponent implements OnInit {
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private router: Router
   ) { }
 
   increment = increment;
@@ -47,6 +49,7 @@ export class TableBookingComponent implements OnInit {
   }
 
   onUpdate() {
+    console.log("updating");
     this.api.getVacantTables(this.bookingForm.value).subscribe({
       next: (response) => {
         console.log(response);
@@ -57,6 +60,14 @@ export class TableBookingComponent implements OnInit {
     });
   }
 
-  onSubmit() { }
+  onSubmit() {
+    this.api.bookTable(this.bookingForm.value).subscribe({
+      next: (response) => {
+        this.bill_id = response.result;
+        this.formStatus = 1;
+        this.router.navigate(['/billing', this.bill_id]);
+      }
+    });
+  }
 
 }

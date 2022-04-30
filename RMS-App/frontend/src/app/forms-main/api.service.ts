@@ -13,12 +13,22 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
-  getVacantTables(data: { floor: number, startTime: string, size: number }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/getFreeTablesFloor`, data);
+  getVacantTables(data: any): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/table/getFreeTablesFloor`, {
+      params: {
+        floor: data.floor,
+        occupancy: data.size,
+        startTime: data.datetime
+      }
+    });
   }
 
-  bookTable(data: { userId: number, tableId: number }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/table/book`, data);
+  bookTable(data: { customerId: number, tableList: number, startTime: string }): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/table/bookTable`, data);
+  }
+
+  getUserInfo() {
+    return JSON.parse(localStorage.getItem('user')!);
   }
 
 }

@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
     this.api.login(this.loginForm.value, ['customer', 'employee'][this.signingInAs]).subscribe({
       next: (response) => {
         localStorage.setItem('user', JSON.stringify(response.result));
+        localStorage.setItem('role', ['customer', 'employee'][this.signingInAs]);
         this.formStatus = 2;
       },
       error: (err) => {

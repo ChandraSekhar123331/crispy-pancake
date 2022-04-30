@@ -30,7 +30,8 @@ const getFreeTables = function getFreeTables(req, res) {
 };
 
 const bookTable = function bookTable(req, res) {
-  const { tableList, startTime } = req.body;
+  const { customerId, tableList, startTime } = req.body;
+  console.log(req.body);
   // assuming that the tableList that reaches here is a valid non clashing one.
   if (tableList == null) {
     return res.status(409).json({
@@ -39,8 +40,8 @@ const bookTable = function bookTable(req, res) {
       result: null,
     });
   }
-  const customerId = req.session.user.id;
-  const { role } = req.session.user;
+  // const customerId = req.session.user.id;
+  // const { role } = req.session.user;
   if (customerId == null) {
     return res.status(403).json({
       message: 'customerId not defined. Unauthorised access.',
@@ -48,33 +49,33 @@ const bookTable = function bookTable(req, res) {
       result: null,
     });
   }
-  if (role == null) {
-    return res.status(403).json({
-      message: 'role not defined. Unauthorised access.',
-      code: -1,
-      result: null,
-    });
-  }
+  // if (role == null) {
+  //   return res.status(403).json({
+  //     message: 'role not defined. Unauthorised access.',
+  //     code: -1,
+  //     result: null,
+  //   });
+  // }
   return billCrudService
     .insert(customerId, 'hotel')
     .then((response) => {
       const billId = response.result.rows[0].bill_id;
-      for (let i = 0; i < tableList.length; i += 1) {
-        tableService
-          .bookTable(billId, tableList[i].tableId, startTime)
-          .catch((error) =>
-            res.status(409).json({
-              message: error.message,
-              code: -1,
-              result: null,
-            }),
-          );
-      }
-      return res.status(200).json({
-        message: 'Success',
-        code: 0,
-        result: response.result.rows[0],
-      });
+      tableService
+        .bookTable(billId, tableList.tableId, startTime)
+        .then((response) => {
+          return res.status(200).json({
+            message: 'Success',
+            code: 0,
+            result: response.result.rows[0],
+          });
+        })
+        .catch((error) =>
+          res.status(409).json({
+            message: error.message,
+            code: -1,
+            result: null,
+          }),
+        );
     })
     .catch((error) =>
       res.status(409).json({
@@ -87,21 +88,21 @@ const bookTable = function bookTable(req, res) {
 
 const getFreeTablesFloor = function getFreeTablesFloor(req, res) {
   let { startTime, floor, occupancy } = req.query;
-  if (occupancy == null) {
+  if (occupancy === null) {
     return res.status(409).json({
       message: "occupancy can't be null",
       code: -1,
       result: null,
     });
   }
-  if (floor == null) {
+  if (floor === null) {
     return res.status(409).json({
       message: "floor can't be null",
       code: -1,
       result: null,
     });
   }
-  if (startTime == null) {
+  if (startTime === 'undefined') {
     startTime = new Date();
   }
 
