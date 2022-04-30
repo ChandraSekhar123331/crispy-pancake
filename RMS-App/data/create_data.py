@@ -170,12 +170,14 @@ def get_user_name(faker, used_names):
     used_names.add(name)
     return name
 
+
 def get_email_id(faker, used_emails):
     email_id = faker.email()
     while email_id in used_emails:
         email_id = faker.email()
     used_emails.add(email_id)
     return email_id
+
 
 def create_attendant_data(faker: Faker()):
     header = [
@@ -361,7 +363,7 @@ def create_table_data():
                 floor = rng.choice(10)
             used_posns.add((x, y, floor))
             entries = [
-                f"x = {x}, y = {y}, floor = {floor}",
+                floor,
                 occupancy
             ]
             writer.writerow(entries)

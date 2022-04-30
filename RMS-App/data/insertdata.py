@@ -99,7 +99,7 @@ if __name__ == "__main__":
     ]
 
     tbl_cols = [
-        {"col_name": "position", "type_func": str},
+        {"col_name": "position", "type_func": int},
         {"col_name": "occupancy", "type_func": int},
     ]
 

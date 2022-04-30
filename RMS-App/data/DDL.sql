@@ -68,7 +68,7 @@ CREATE TABLE Bill (
 
 CREATE TABLE tbl (
   table_id bigserial,
-  position varchar,
+  position int,
   occupancy int,
   PRIMARY KEY (table_id)
 );

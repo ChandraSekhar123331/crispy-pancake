@@ -85,5 +85,44 @@ const bookTable = function bookTable(req, res) {
     );
 };
 
+const getFreeTablesFloor = function getFreeTablesFloor(req, res) {
+  let { startTime, floor, occupancy } = req.query;
+  if (occupancy == null) {
+    return res.status(409).json({
+      message: "occupancy can't be null",
+      code: -1,
+      result: null,
+    });
+  }
+  if (floor == null) {
+    return res.status(409).json({
+      message: "floor can't be null",
+      code: -1,
+      result: null,
+    });
+  }
+  if (startTime == null) {
+    startTime = new Date();
+  }
+
+  return tableService
+    .getFreeTablesFloor(startTime, floor, occupancy)
+    .then((response) =>
+      res.status(200).json({
+        message: 'Success',
+        code: 0,
+        result: response.result.rows,
+      }),
+    )
+    .catch((error) =>
+      res.status(409).json({
+        message: error.message,
+        code: -1,
+        result: null,
+      }),
+    );
+};
+
 exports.getFreeTables = getFreeTables;
+exports.getFreeTablesFloor = getFreeTablesFloor;
 exports.bookTable = bookTable;

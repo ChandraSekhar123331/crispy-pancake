@@ -11,6 +11,7 @@ router.post('/update', crudController.update);
 router.get('/getAllInfo', crudController.getAllInfo);
 router.get('/getOneInfo', crudController.getOneInfo);
 router.get('/getFreeTables', tableController.getFreeTables);
+router.get('/getFreeTablesFloor', tableController.getFreeTablesFloor);
 router.post('/bookTable', tableController.bookTable);
 
 module.exports = router;
