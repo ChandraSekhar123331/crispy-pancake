@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiService } from '../api.service';
+import { ApiService as EntryApi } from 'src/app/entry/api.service';
 
 @Component({
   selector: 'app-billing',
@@ -10,10 +12,13 @@ import { Router } from '@angular/router';
 export class BillingComponent implements OnInit {
 
   constructor(
+    private api: ApiService,
+    private entryApi: EntryApi,
     private router: Router
   ) { }
 
-  bill_id = this.router.url.split('/')[2];
+  bill_id?: number;
+  table_id?: number;
   customer_name?: string; // TODO
 
   order: Map<number, [string, number, number]> = new Map();
@@ -42,6 +47,18 @@ export class BillingComponent implements OnInit {
   Array = Array;
 
   ngOnInit(): void {
+    this.api.getActiveBill(this.entryApi.getUser().emp_id).subscribe({
+      next: (data: any) => {
+        if (data) {
+          this.bill_id = data.bill_id;
+          this.table_id = data.table_id;
+          this.customer_name = data.full_name;
+        } else {
+          alert('No active bill exists.');
+          this.router.navigate(['/']);
+        }
+      }
+    });
   }
 
   onAdd() {
@@ -51,7 +68,20 @@ export class BillingComponent implements OnInit {
       ls![1] += quantity;
       this.order.set(dish_id, ls!);
     } else {
-      this.order.set(dish_id, [`Dish ${dish_id}`, quantity, 17 + dish_id]);
+      this.coFormStatus = 1;
+      this.api.getDishInfo(dish_id).subscribe({
+        next: (res: any) => {
+          if (res) {
+            this.order.set(dish_id, [res.dish_name, quantity, res.dish_price]);
+          } else {
+            alert('No dish exists with the given ID.');
+          }
+          this.coFormStatus = 0;
+        },
+        error: (err: any) => {
+          alert(`Error encountered: ${err.message}`);
+        }
+      });
     }
   }
 

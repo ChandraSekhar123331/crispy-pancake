@@ -5,7 +5,8 @@
             <div class="subtitle">Already registered? <a [routerLink]="['/login']">Sign in!</a></div>
         </div>
         <div class="card-body">
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"
+                [class.disabled]="formStatus !== 0">
                 <div class="form-group" [class.valid]="registerForm.controls['fullName'].valid">
                     <label for="fullName">Full Name</label>
                     <input type="text" id="fullName" formControlName="fullName" />
@@ -39,8 +40,10 @@
                         I accept the terms and conditions.
                     </label>
                 </div>
-                <button type="submit" [disabled]="!registerForm.valid || formStatus !== 0" [class.negative]="formStatus === 3" [class.selected]="formStatus === 2">
-                    {{formStatus === 0 ? "Sign up" : formStatus === 1 ? "Signing up..." : formStatus === 3 ? "Sign up failed" : "Signed up!"}}
+                <button type="submit" [disabled]="!registerForm.valid || formStatus !== 0"
+                    [class.negative]="formStatus === 3" [class.selected]="formStatus === 2">
+                    {{formStatus === 0 ? "Sign up" : formStatus === 1 ? "Signing up..." : formStatus === 3 ?
+                    "Sign up failed" : "Signed up!"}}
                 </button>
             </form>
         </div>

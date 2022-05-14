@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm = new FormGroup({
     emailId: new FormControl('', [Validators.required, Validators.email]),
-    userName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9_]{3,}$')]),
+    userName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.]{3,}$')]),
     fullName: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(4)]),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
@@ -33,20 +33,26 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.formStatus = 1;
+    if (this.registerForm.valid) {
+      this.formStatus = 1;
+      const data = JSON.parse(JSON.stringify(this.registerForm.value));
+      delete data.terms;
 
-    this.api.register(this.registerForm.value).subscribe({
-      next: () => {
-        this.formStatus = 2;
-        this.registerForm.reset();
-        this.router.navigate(['/login']);
-      },
-      error: (err) => {
-        console.error(err);
-        this.formStatus = 3;
-        setTimeout(() => { this.formStatus = 0; }, 2000);
-      }
-    });
+      this.api.register(data).subscribe({
+        next: () => {
+          this.formStatus = 2;
+          setTimeout(() => {
+            this.router.navigate(['/login'], { replaceUrl: true });
+          }, 1500);
+        },
+        error: () => {
+          this.formStatus = 3;
+          setTimeout(() => {
+            this.formStatus = 0;
+          }, 2500);
+        }
+      });
+    }
   }
 
 }

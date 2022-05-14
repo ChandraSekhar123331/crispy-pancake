@@ -1,42 +1,97 @@
+<app-navbar></app-navbar>
 <div class="full-page mid-center">
-    <h2>
-        Assign Table
-    </h2>
-    <div style="height: 25px;"></div>
-    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
-        <div class="fg-grid">
-            <div class="form-group">
-                <label for="floor">Floor</label>
-                <div class="input" id="floor">
-                    <span class="num-controls nc-l" [class.disabled]="bookingForm.controls['floor'].value == 0"
-                        (click)="decrement(bookingForm, 'floor', 0)">&#10148;</span>
-                    {{bookingForm.controls['floor'].value}}
-                    <span class="num-controls nc-r" [class.disabled]="bookingForm.controls['floor'].value == 9"
-                        (click)="increment(bookingForm, 'floor', 9)">&#10148;</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="size">Party Size</label>
-                <div class="input" id="size">
-                    <span class="num-controls nc-l" [class.disabled]="bookingForm.controls['size'].value == 1"
-                        (click)="decrement(bookingForm, 'size', 1)">&#10148;</span>
-                    {{bookingForm.controls['size'].value}}
-                    <span class="num-controls nc-r" [class.disabled]="bookingForm.controls['size'].value == 10"
-                        (click)="increment(bookingForm, 'size', 10)">&#10148;</span>
-                </div>
-            </div>
-            <div class="form-group" [class.valid]="bookingForm.controls['datetime'].valid">
-                <label for="datetime">Date and Time</label>
-                <input type="datetime-local" id="datetime" formControlName="datetime" />
-            </div>
-            <div><button [disabled]="bookingForm.invalid" (click)="onUpdate()">Update</button></div>
+    <div class="card" *ngIf="!identified">
+        <div class="card-header">
+            <h2 class="card-title">Table booking</h2>
+            <div class="subtitle" *ngIf="!identified && !customer"><a (click)="registered = !registered">Customer is <span
+                        *ngIf="registered">not</span> already registered.</a></div>
         </div>
-    </form>
-    <div class="grid">
-        <div class="seat-sel" *ngFor="let table of tables">
-            <button [disabled]="table[1]" [class.secondary]="table[1]" (click)="assignedTable = table[0]"
-                [class.selected]="table[0] === assignedTable">•</button>
+        <div class="card-body">
+            <form [formGroup]="customerInfoForm" *ngIf="!customer">
+                <div class="form-group" [class.valid]="customerInfoForm.controls['username'].valid"
+                    *ngIf="!usingEmail && registered">
+                    <label for="username">Customer's <a (click)="usingEmail = true">Username</a></label>
+                    <input type="text" id="username" formControlName="username">
+                </div>
+                <div class="form-group" [class.valid]="customerInfoForm.controls['email'].valid"
+                    *ngIf="usingEmail && registered">
+                    <label for="email">Customer's <a (click)="usingEmail = false">Email</a></label>
+                    <input type="email" id="email" formControlName="email">
+                </div>
+                <div class="form-group" [class.valid]="customerInfoForm.controls['email'].valid" *ngIf="!registered">
+                    <label for="name">Customer's Name</label>
+                    <input type="text" id="name" formControlName="name">
+                </div>
+                <button type="submit" *ngIf="registered" (click)="onCheck()"
+                    [disabled]="!(customerInfoForm.controls[usingEmail ? 'email' : 'username'].valid) || checkStatus != 0">
+                    {{checkStatus == 0 ? "Check" : "Checking..."}}
+                </button>
+                <button *ngIf="!registered" (click)="onCheck()"
+                    [disabled]="!(customerInfoForm.controls['name'].valid) || checkStatus != 0">
+                    Continue
+                </button>
+            </form>
+            <form *ngIf="customer">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <td>Customer ID</td>
+                            <td>{{customer.customer_id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Customer's Name</td>
+                            <td>{{customer.full_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Customer's Email</td>
+                            <td>{{customer.email_id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Customer's Phone</td>
+                            <td>{{customer.phone_number}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <button (click)="identified = true">Continue</button>
+            </form>
         </div>
     </div>
-    <button [disabled]="assignedTable === undefined">Continue</button>
+    <div *ngIf="identified">
+        <h2>
+            Assign Table
+        </h2>
+        <form [formGroup]="bookingForm">
+            <div class="fg-grid">
+                <div class="form-group">
+                    <label for="floor">Floor</label>
+                    <div class="input" id="floor">
+                        <span class="num-controls nc-l" [class.disabled]="bookingForm.controls['floor'].value == 0"
+                            (click)="decrement(bookingForm, 'floor', 0)">&#10148;</span>
+                        {{bookingForm.controls['floor'].value}}
+                        <span class="num-controls nc-r" [class.disabled]="bookingForm.controls['floor'].value == 9"
+                            (click)="increment(bookingForm, 'floor', 9)">&#10148;</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="size">Party Size</label>
+                    <div class="input" id="size">
+                        <span class="num-controls nc-l" [class.disabled]="bookingForm.controls['size'].value == 1"
+                            (click)="decrement(bookingForm, 'size', 1)">&#10148;</span>
+                        {{bookingForm.controls['size'].value}}
+                        <span class="num-controls nc-r" [class.disabled]="bookingForm.controls['size'].value == 10"
+                            (click)="increment(bookingForm, 'size', 10)">&#10148;</span>
+                    </div>
+                </div>
+                <div><button [disabled]="bookingForm.invalid" (click)="onUpdate()"
+                        [disabled]="updateStatus != 0">{{updateStatus == 0 ? "Update" : "Updating..."}}</button></div>
+            </div>
+        </form>
+        <div class="grid">
+            <div class="seat-sel" *ngFor="let table of tables">
+                <button [class.secondary]="table.table_id !== assignedTable" (click)="assignedTable = table.table_id"
+                    [class.selected]="table.table_id === assignedTable">{{table.occupancy}}</button>
+            </div>
+        </div>
+        <button [disabled]="assignedTable === undefined || formStatus !== 0" (click)="onSubmit()">Continue</button>
+    </div>
 </div>

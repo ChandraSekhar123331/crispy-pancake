@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="full-page">
     <div class="mid-center">
         <h2>
@@ -6,14 +7,17 @@
         <button disabled class="secondary">
             Waiter Name <br> Experience &mdash; Rating
         </button>
-        <div class="subtitle">Bill ID: {{bill_id}}</div>
+        <div class="subtitle">
+            <div>Bill ID: {{bill_id}}</div>
+            <div>Customer's Name: {{customer_name}}</div>
+        </div>
         <div class="grid">
             <button *ngFor="let waiter of waiters; let i = index" (click)="assignedWaiter = i"
                 [class.secondary]="assignedWaiter !== i">
-                {{ waiter.name }}<br>{{ waiter.experience }} &mdash; {{ waiter.rating }}
+                {{ waiter.emp_name }}<br>{{ waiter.experience }} &mdash; {{ waiter.rating | number:'1.2-2' }}
             </button>
         </div>
-        <button [disabled]="!assignedWaiter">Continue</button>
+        <button id="continue" [disabled]="assignedWaiter === undefined || formStatus !== 0" (click)="onSubmit()">Continue</button>
     </div>
 
 </div>

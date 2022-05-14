@@ -1,19 +1,29 @@
 <div class="full-page mid-center">
     <div class="card">
         <div class="card-header">
-            <h2 class="card-title">Admin sign in</h2>
+            <h2 class="card-title">Administrator sign in</h2>
         </div>
         <div class="card-body">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" [class.disabled]="formStatus != 0">
+                <div class="form-group" [class.valid]="loginForm.controls['userName'].valid" *ngIf="!usingEmail">
+                    <label for="username"><a (click)="usingEmail = true">Username</a></label>
+                    <input type="text" id="username" formControlName="userName">
+                </div>
+                <div class="form-group" [class.valid]="loginForm.controls['emailId'].valid" *ngIf="usingEmail">
+                    <label for="email"><a (click)="usingEmail = false">Email</a></label>
+                    <input type="email" id="email" formControlName="emailId">
+                </div>
                 <div class="form-group" [class.valid]="loginForm.controls['password'].valid">
                     <label for="password">Password</label>
                     <a id="show-hide" (click)="showPassword = !showPassword"><small>{{showPassword ? 'Hide' :
                             'Show'}}</small></a>
-                    <input [type]="showPassword ? 'text' : 'password'" id="password"
-                        formControlName="password" spellcheck="false" />
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+                        spellcheck="false" />
                 </div>
-                <button type="submit" [disabled]="!loginForm.valid || formStatus != 0">
-                    {{formStatus == 0 ? "Sign in" : "Signing in..."}}
+                <button type="submit" [disabled]="!formValid() || formStatus !== 0" [class.negative]="formStatus === 3"
+                    [class.selected]="formStatus === 2">
+                    {{formStatus === 0 ? "Sign in" : formStatus === 1 ? "Signing in..." : formStatus === 3 ?
+                    "Sign in failed" : "Signed in!"}}
                 </button>
             </form>
         </div>

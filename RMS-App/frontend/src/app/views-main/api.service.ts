@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +12,12 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
-  baseUrl = 'http://localhost:3000/';
+  baseUrl = 'http://localhost:3000/main/';
 
-  loadDishes(skip: number, lim: number) {
-    const url = this.baseUrl + `menu/basic/?skip=${skip}&lim=${lim}`;
-    return this.http.get(url);
+  getMenu(skip: number, limit: number): Observable<any> {
+    return this.http.get(this.baseUrl + `menu/${skip}/${limit}`, {
+      withCredentials: true
+    });
   }
 
-  prevOrders() {
-    const url = this.baseUrl + `orders/prev`;
-    return this.http.get(url);
-  }
 }

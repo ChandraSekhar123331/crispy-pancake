@@ -2,24 +2,31 @@
     <div class="card">
         <div class="card-header">
             <h2 class="card-title">{{signingInAs == 0 ? "Patron" : "Employee"}} sign in</h2>
-            <div class="subtitle" *ngIf="signingInAs == 0">Not registered yet? <a [routerLink]="['/register']">Sign up!</a>
+            <div class="subtitle" *ngIf="signingInAs == 0">Not registered yet? <a [routerLink]="['/register']">Sign
+                    up!</a>
             </div>
         </div>
         <div class="card-body">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <div class="form-group" [class.valid]="loginForm.controls['emailId'].valid">
-                    <label for="emailId">Email ID</label>
-                    <input type="email" id="emailId" formControlName="emailId" />
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" [class.disabled]="formStatus != 0">
+                <div class="form-group" [class.valid]="loginForm.controls['userName'].valid" *ngIf="!usingEmail">
+                    <label for="username"><a (click)="usingEmail = true">Username</a></label>
+                    <input type="text" id="username" formControlName="userName">
+                </div>
+                <div class="form-group" [class.valid]="loginForm.controls['emailId'].valid" *ngIf="usingEmail">
+                    <label for="email"><a (click)="usingEmail = false">Email</a></label>
+                    <input type="email" id="email" formControlName="emailId">
                 </div>
                 <div class="form-group" [class.valid]="loginForm.controls['password'].valid">
                     <label for="password">Password</label>
                     <a id="show-hide" (click)="showPassword = !showPassword"><small>{{showPassword ? 'Hide' :
                             'Show'}}</small></a>
-                    <input [type]="showPassword ? 'text' : 'password'" id="password"
-                        formControlName="password" spellcheck="false" />
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+                        spellcheck="false" />
                 </div>
-                <button type="submit" [disabled]="!loginForm.valid || formStatus !== 0" [class.negative]="formStatus === 3" [class.selected]="formStatus === 2">
-                    {{formStatus === 0 ? "Sign in" : formStatus === 1 ? "Signing in..." : formStatus === 3 ? "Sign in failed" : "Signed in!"}}
+                <button type="submit" [disabled]="!formValid() || formStatus !== 0" [class.negative]="formStatus === 3"
+                    [class.selected]="formStatus === 2">
+                    {{formStatus === 0 ? "Sign in" : formStatus === 1 ? "Signing in..." : formStatus === 3 ?
+                    "Sign in failed" : "Signed in!"}}
                 </button>
             </form>
         </div>

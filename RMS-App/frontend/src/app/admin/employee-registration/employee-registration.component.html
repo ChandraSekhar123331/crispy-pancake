@@ -1,10 +1,11 @@
+<app-navbar></app-navbar>
 <div class="full-page mid-center">
     <div class="card">
         <div class="card-header">
             <h2 class="card-title">Employee registration</h2>
         </div>
         <div class="card-body">
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="registerForm" [class.disabled]="formStatus !== 0">
                 <div class="form-group" [class.valid]="registerForm.controls['firstName'].valid">
                     <label for="firstName">First Name</label>
                     <input type="text" id="firstName" formControlName="firstName" />
@@ -31,7 +32,7 @@
                 </div>
                 <div class="form-group" [class.valid]="registerForm.controls['role'].valid">
                     <label for="role">Role</label>
-                    <div class="input">
+                    <div class="input" id="role">
                         <div class="btn-grid">
                             <button *ngFor="let role of roles" type="button"
                                 [class.secondary]="role !== registerForm.controls['role'].value"
@@ -40,10 +41,41 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" [disabled]="!registerForm.valid || formStatus != 0">
-                    {{formStatus == 0 ? "Sign up" : "Signing up..."}}
-                </button>
             </form>
+            <form [formGroup]="form2" [class.disabled]="formStatus !== 0">
+                <div class="form-group" [class.valid]="form2.controls['attendantType'].valid" *ngIf="registerForm.controls['role'].value === 'attendant'">
+                    <label for="attendant">Attendant Type</label>
+                    <div class="input" id="attendant">
+                        <div class="btn-grid">
+                            <button *ngFor="let type of attendantTypes" type="button"
+                                [class.secondary]="type !== form2.controls['attendantType'].value"
+                                (click)="form2.controls['attendantType'].setValue(type)">{{type[0] |
+                                uppercase}}{{type.slice(1)}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" [class.valid]="form2.controls['chefSpecialization'].valid" *ngIf="registerForm.controls['role'].value === 'chef'">
+                    <label for="chef">Chef Specialization</label>
+                    <input type="text" id="chef" formControlName="chefSpecialization">
+                </div>
+                <div class="form-group" [class.valid]="form2.controls['managerSkill'].valid" *ngIf="registerForm.controls['role'].value === 'manager'">
+                    <label for="manager">Manager Skill</label>
+                    <div class="input" id="manager">
+                        <div class="btn-grid">
+                            <button *ngFor="let type of managerSkills; let i = index;" type="button"
+                                [class.secondary]="type !== form2.controls['managerSkill'].value"
+                                (click)="form2.controls['managerSkill'].setValue(type)">{{type[0] |
+                                uppercase}}{{i == 0 || i == managerSkills.length - 1 ? (type.slice(1) | uppercase) :
+                                type.slice(1)}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <button type="submit" [disabled]="!formValid() || formStatus !== 0" (click)="onSubmit()"
+                [class.negative]="formStatus === 3" [class.selected]="formStatus === 2">
+                {{formStatus === 0 ? "Register Employee" : formStatus === 1 ? "Registering..." : formStatus === 3 ?
+                "Registration failed" : "Registration Complete!"}}
+            </button>
         </div>
     </div>
 </div>

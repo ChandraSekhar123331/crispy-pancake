@@ -1,0 +1,62 @@
+<app-navbar></app-navbar>
+<div class="full-page mid-center">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Employee termination</h2>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="formGroup" [class.disabled]="formStatus !== 0">
+                <div *ngIf="!found" class="form-group" [class.valid]="formGroup.controls['username'].valid">
+                    <label for="username">Employee's Username</label>
+                    <input type="text" id="username" formControlName="username" />
+                </div>
+                <button *ngIf="!found" (click)="onSearch()">Search</button>
+
+                <div class="table-container" *ngIf="found">
+                    <table>
+                        <tr>
+                            <td>Employee ID</td>
+                            <td>{{employee.emp_id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Username</td>
+                            <td>{{employee.user_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Employee Name</td>
+                            <td>{{employee.emp_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Role</td>
+                            <td>{{employee.emp_role}}</td>
+                        </tr>
+                        <tr>
+                            <td>Email ID</td>
+                            <td>{{employee.email_id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td>
+                            <td>{{employee.phone_number}}</td>
+                        </tr>
+                        <tr>
+                            <td>Salary</td>
+                            <td class="currency">{{employee.salary | currency:'INR':true}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form-group" *ngIf="found">
+                    <input type="checkbox" value="" id="confirmation" formControlName="confirmation" />
+                    <label for="confirmation">
+                        I hereby confirm the termination of the above employee.
+                    </label>
+                </div>
+                <button *ngIf="found" type="submit" [disabled]="formStatus !== 0 || !formGroup.controls['confirmation'].valid" [class.negative]="formStatus === 3"
+                    [class.selected]="formStatus === 2" (click)="onSubmit()">
+                    {{formStatus === 0 ? "Continue" : formStatus === 1 ? "Updating employee status..." : formStatus ===
+                    3 ? "Error encountered" : "Employment terminated."}}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,21 +1,28 @@
 {
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "connect-pg-simple": "^7.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "express-session": "^1.17.2",
-    "nodemon": "^2.0.15",
-    "pg": "^8.7.3"
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "postinstall": "pm2 install typescript",
+    "test": "ts-node server.ts",
+    "start": "pm2 start server.ts --watch",
+    "stop": "pm2 kill"
   },
-  "devDependencies": {
-    "eslint": "^8.14.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.5.0"
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "latest",
+    "@types/express": "latest",
+    "@types/express-session": "latest",
+    "@types/pg": "latest",
+    "bcryptjs": "^2.4.3",
+    "cors": "latest",
+    "express": "latest",
+    "express-session": "latest",
+    "pg": "latest",
+    "pm2": "latest",
+    "ts-node": "latest"
   }
 }

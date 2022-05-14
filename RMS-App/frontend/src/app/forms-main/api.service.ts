@@ -1,34 +1,73 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  baseUrl = 'http://127.0.0.1:3000';
-
   constructor(
     private http: HttpClient
   ) { }
 
-  getVacantTables(data: any): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/table/getFreeTablesFloor`, {
-      params: {
-        floor: data.floor,
-        occupancy: data.size,
-        startTime: data.datetime
-      }
+  baseUrl = 'http://localhost:3000/main/';
+
+  getDishInfo(id: number) {
+    return this.http.get(`${this.baseUrl}dish/${id}`, {
+      withCredentials: true
     });
   }
 
-  bookTable(data: { customerId: number, tableList: number, startTime: string }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/table/bookTable`, data);
+  submitOrder(order: any) {
+    return this.http.post(`${this.baseUrl}order`, order, {
+      withCredentials: true
+    });
   }
 
-  getUserInfo() {
-    return JSON.parse(localStorage.getItem('user')!);
+  getFreeWaiters() {
+    return this.http.get(`${this.baseUrl}free-waiters`, {
+      withCredentials: true
+    });
+  }
+
+  getVacantTables(data: any) {
+    return this.http.get(`${this.baseUrl}vacant-tables/${data.floor}/${data.size}`, {
+      withCredentials: true
+    });
+  }
+
+  bookTable(data: any) {
+    return this.http.post(`${this.baseUrl}book-table`, data, {
+      withCredentials: true
+    });
+  }
+
+  getCustomerInfo(username: string) {
+    return this.http.get(`${this.baseUrl}customer-info/${username}`, {
+      withCredentials: true,
+    });
+  }
+
+  saveOrder(data: any) {
+    localStorage.setItem('order', JSON.stringify(data));
+  }
+
+  getOrder() {
+    return JSON.parse(localStorage.getItem('order')!);
+  }
+
+  assignWaiter(waiter: number, bill: number) {
+    return this.http.post(`${this.baseUrl}assign-waiter`, { waiter, bill }, {
+      withCredentials: true
+    });
+  }
+
+  getActiveBill(waiter: number) {
+    return this.http.get(`${this.baseUrl}active-bill/${waiter}`, {
+      withCredentials: true
+    });
   }
 
 }

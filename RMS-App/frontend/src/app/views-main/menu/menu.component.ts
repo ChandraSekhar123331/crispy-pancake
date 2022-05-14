@@ -14,17 +14,27 @@ export class MenuComponent implements OnInit {
 
   dishes: any = [];
   skip = 0;
+  total = 0;
+  loading = false;
+
+  mx = () => Math.min(this.skip + 10, this.total);
 
   ngOnInit(): void {
-    this.updateSkip(0);
+    this.updateMenu(0);
   }
 
-  updateSkip(skip: number) {
-    if (skip < 0 || skip > 31) return;
+  updateMenu(skip: number) {
+    if (skip < 0 || skip > this.total)
+      return;
     this.skip = skip;
-    this.api.loadDishes(this.skip, 10).subscribe((response: any) => {
-      this.dishes = response.result;
-    });
+    this.loading = true;
+    this.api.getMenu(skip, 10).subscribe(
+      (data: any) => {
+        this.dishes = data.dishes;
+        this.total = data.total;
+        this.loading = false;
+      }
+    );
   }
 
 }

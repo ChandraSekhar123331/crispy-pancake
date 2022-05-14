@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { increment, decrement } from '../../utility-functions';
 import { ApiService } from '../api.service';
+import { increment, decrement } from 'src/app/utility-functions';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,51 +21,83 @@ export class TableBookingComponent implements OnInit {
 
   bookingForm = new FormGroup({
     floor: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(9)]),
-    datetime: new FormControl('', [Validators.required, this.validateDateTime]),
     size: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(10)])
   });
 
+  customerInfoForm = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9_]{3,}$')]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    name: new FormControl('', [Validators.required])
+  });
+
+  customer?: any;
+  identified = false;
+
+  usingEmail = false;
+  registered = true;
+
+  checkStatus = 0;
+  updateStatus = 0;
   formStatus = 0;
 
-  bill_id?: number;
-
   counter = new Array(10);
-  tables: [number, boolean][] = [[12, false], [11, true], [34, false], [56, true], [78, false], [90, true], [32, false], [17, true], [91, false], [44, true]];
+  tables?: [{ table_id: number, occupancy: number }];
   assignedTable?: number;
-
-  validateDateTime(control: FormControl) {
-    const value = control.value;
-    if (value) {
-      const date = new Date(value);
-      const now = new Date();
-      if (date < now) {
-        return { validateDateTime: false };
-      }
-    }
-    return null;
-  }
 
   ngOnInit(): void {
   }
 
+  async onCheck() {
+    if (this.registered) {
+      this.checkStatus = 1;
+      this.api.getCustomerInfo(this.customerInfoForm.value.username).subscribe({
+        next: (response: any) => {
+          if (response) {
+            this.checkStatus = 2;
+            this.customer = response;
+          } else {
+            alert("There exists no customer with this username.");
+            this.identified = false;
+            this.checkStatus = 0;
+          }
+        }
+      });
+    } else {
+      this.customer = {
+        name: this.customerInfoForm.value.name
+      }
+      this.identified = true;
+    }
+  }
+
+  isRegistered() {
+    return this.customer.username !== undefined && this.customer.username !== '';
+  }
+
   onUpdate() {
-    console.log("updating");
+    this.updateStatus = 1;
     this.api.getVacantTables(this.bookingForm.value).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: () => {
-        // TODO
+      next: (response: any) => {
+        this.tables = response;
+        this.updateStatus = 0;
+        this.assignedTable = undefined;
       }
     });
   }
 
   onSubmit() {
-    this.api.bookTable(this.bookingForm.value).subscribe({
-      next: (response) => {
-        this.bill_id = response.result;
-        this.formStatus = 1;
-        this.router.navigate(['/billing', this.bill_id]);
+    this.formStatus = 1;
+    this.api.bookTable({
+      customer_id: this.customer.customer_id,
+      table_id: this.assignedTable,
+    }).subscribe({
+      next: (response: any) => {
+        this.formStatus = 2;
+        this.api.saveOrder({
+          customer: this.customer,
+          bill: response.billId
+        });
+        this.router.navigate(['/assign-waiter']);
       }
     });
   }

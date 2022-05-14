@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="full-page mid-center">
     <div class="card-grid">
         <div>
@@ -71,8 +72,10 @@
                         </tbody>
                     </table>
                 </div>
-                <button type="submit" [disabled]="order.size == 0 || formStatus != 0">
-                    {{formStatus == 0 ? "Book order" : "Booking order..."}}
+                <button type="submit" [disabled]="order.size === 0 || formStatus !== 0" [class.negative]="formStatus === 3"
+                    [class.selected]="formStatus === 2" (click)="onSubmit()">
+                    {{formStatus === 0 ? "Place order" : formStatus === 1 ? "Placing order..." : formStatus === 3 ?
+                    "Error encountered" : "Order placed!"}}
                 </button>
             </div>
         </div>

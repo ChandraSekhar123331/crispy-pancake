@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+
+import { LoginGuard } from '../login.guard';
 
 @NgModule({
   declarations: [
@@ -16,17 +16,13 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   imports: [
     CommonModule,
-    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatIconModule,
+    HttpClientModule,
     RouterModule.forChild([
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
+      { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+      { path: 'register', component: RegisterComponent, canActivate: [LoginGuard] }
     ])
-  ],
-  exports: [
-    LoginComponent
   ]
 })
 export class EntryModule { }

@@ -1,10 +1,15 @@
+<app-navbar></app-navbar>
 <div class="full-page mid-center">
     <div class="card-grid">
         <div>
             <div class="card">
                 <div class="card-header" style="padding: 0;">
                     <h2 class="card-title">Dine-in billing</h2>
-                    <div class="subtitle" style="font-size: 1.1em;">Bill ID: {{bill_id}}</div>
+                    <div class="subtitle" style="font-size: 1.1em;">
+                        <div>Bill ID: {{bill_id}}</div>
+                        <div>Table: {{table_id}}</div>
+                        <div>Customer's Name: {{customer_name}}</div>
+                    </div>
                 </div>
             </div>
             <div style="height: 25px;"></div>
